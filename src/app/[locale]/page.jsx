@@ -2,6 +2,7 @@ import Hero from '@/modules/Hero/Hero';
 import s from './page.module.scss';
 import Introduction from '@/modules/Introduction/Introduction';
 import About from '@/modules/About/About';
+import Services from '@/modules/Services/Services';
 
 export default async function Home({ params: rawParams }) {
   const params = await rawParams;
@@ -15,6 +16,7 @@ export default async function Home({ params: rawParams }) {
       <Hero />
       <Introduction />
       <About />
+      <Services />
     </div>
   );
 }
