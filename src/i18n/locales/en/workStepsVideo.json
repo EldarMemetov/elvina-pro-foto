@@ -1,0 +1,33 @@
+{
+  "eyebrow": "Process",
+  "title": "From idea to ",
+  "titleSpan": "finished video",
+  "description": "5 clear steps — no chaos, hidden phases or unnecessary stress. You always know where we stand.",
+  "steps": [
+    {
+      "num": "01",
+      "title": "Getting acquainted",
+      "description": "You write to me via a convenient messenger — tell me about your business, task and target audience. I listen and ask the right questions."
+    },
+    {
+      "num": "02",
+      "title": "Briefing & script",
+      "description": "I structure the idea: concept, script, moodboard and a clear shooting plan. Everything is agreed with you."
+    },
+    {
+      "num": "03",
+      "title": "Shoot day",
+      "description": "I come to you or we choose a location. Sound, light, image — every detail is controlled."
+    },
+    {
+      "num": "04",
+      "title": "Editing & post-production",
+      "description": "I tell the story: editing, graphics, music and colour grading. Every second counts."
+    },
+    {
+      "num": "05",
+      "title": "Final & revisions",
+      "description": "I present the result, refine details based on your feedback and deliver the final file in any format."
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+$primary-font-family: var(--font-manrope), sans-serif;
+$secondary-font-family: var(--font-inter), sans-serif;
+$color-ivory: #f5f0e8; // Warm Ivory — основной фон
+$color-beige: #e7ded1; // Soft Beige — дополнительные секции
+$color-champagne: #b49a7a; // Muted Champagne — акценты
+$color-charcoal: #39332d; // Deep Charcoal — заголовки и текст
+$color-white: #ffffff; // Pure White — карточки и пространства
+$color-taupe: #887d70; // Taupe — вторичный текст
+$color-footer: #292622; // Footer — самый тёмный тон
+
+// ---------- Семантические алиасы ----------
+$bg-page: $color-ivory;
+$bg-alt: $color-beige;
+$bg-dark: $color-charcoal;
+$bg-card: $color-white;
+$accent: $color-champagne;
+$text-primary: $color-charcoal;
+$text-secondary: $color-taupe;
+$text-light: $color-ivory;
+$text-light-secondary: rgba(245, 240, 232, 0.64);
+
+// ---------- Типографика ----------
+// Переменные --font-playfair / --font-cormorant / --font-manrope
+// приходят из next/font в layout.js
+$font-heading: var(--font-playfair), 'Playfair Display', Georgia, serif;
+$font-accent: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+$font-body: var(--font-manrope), 'Manrope', 'Helvetica Neue', sans-serif;
+
+// Обратная совместимость со старыми файлами
+$primary-font-family: $font-body; // текст, меню, кнопки
+$secondary-font-family: $font-accent; // курсивные акценты
+
+$fs-h1: clamp(40px, 5.5vw, 88px);
+$fs-h2: clamp(30px, 4vw, 64px);
+$fs-h3: clamp(22px, 2.6vw, 40px);
+$fs-h4: clamp(18px, 2vw, 28px);
+$fs-body: 16px;
+$fs-small: 14px;
+$tracking-wide: 0.14em;
+$tracking-eyebrow: 0.22em;
+
+// ---------- Кнопки: графит → Champagne ----------
+$btn-bg: $color-charcoal;
+$btn-text: $color-ivory;
+$btn-hover-bg: $color-champagne;
+$btn-hover-text: $color-white;
+
+// ---------- Радиусы и тени ----------
+$radius-s: 2px;
+$radius-m: 4px;
+$shadow-card: 0 24px 48px rgba(57, 51, 45, 0.08);
+$shadow-hover: 0 32px 64px rgba(57, 51, 45, 0.14);
+
+// ---------- Анимации: плавные, без излишеств ----------
+$ease-lux: cubic-bezier(0.22, 0.61, 0.36, 1);
+$transition-fast: 0.25s $ease-lux;
+$transition-base: 0.45s $ease-lux;
+$transition-slow: 0.8s $ease-lux;
+
+// ---------- Отступы ----------
+$container-max: 1280px;
+$gutter: 20px;
+$pad-section-m: 72px;
+$pad-section-t: 96px;
+$pad-section-d: 128px;
+
+// ---------- Фоны секций ----------
+$section-backgrounds: (
+  hero: $color-charcoal,
+  // фотография на весь экран; графит — фолбэк под фото
+  introduction: $color-ivory,
+  about: $color-white,
+  services: $color-beige,
+  portfolio: $color-ivory,
+  experience: $color-charcoal,
+  locations: $color-white,
+  testimonials: $color-beige,
+  faq: $color-ivory,
+  contact: $color-charcoal,
+  footer: $color-footer,
+);
+
+@function section-bg($name) {
+  @return map-get($section-backgrounds, $name);
+}

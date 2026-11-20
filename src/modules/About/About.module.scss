@@ -1,0 +1,271 @@
+// Двухколоночный макет с 1024px (стандартный desktop 1440px — слишком поздно
+// для ноутбуков 1280–1366)
+$wide: 1024px;
+
+// Для мелкого текста на светлом фоне берём более глубокий champagne
+$ink-champagne: color-mix(in srgb, #{$color-champagne} 55%, #{$color-charcoal});
+$ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
+
+// Фон (white), паддинги и scroll-margin даёт глобальный .section.section-about
+.about {
+  overflow: hidden; // подложка и параллакс не создают горизонтальный скролл
+}
+
+.inner {
+  @include container;
+  display: grid;
+  gap: 64px;
+
+  @include media(tablet) {
+    gap: 80px;
+  }
+
+  // Зеркало к Introduction: текст слева (шире), портрет справа
+  @media (min-width: $wide) {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: 88px;
+    align-items: center;
+  }
+
+  @include media(desktop) {
+    gap: 128px;
+  }
+}
+
+// ============================================================
+// ПОРТРЕТ
+// Подложка-паспарту + фото, которое «проявляется» и слегка
+// смещается внутри рамки при прокрутке.
+// ============================================================
+.media {
+  --o: 14px; // вынос подложки
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  margin-inline: auto;
+  // подложка уходит влево-вниз, поэтому оставляем ей место
+  padding: 0 0 var(--o) var(--o);
+
+  @include media(tablet) {
+    --o: 22px;
+  }
+
+  @media (min-width: $wide) {
+    order: 2; // портрет справа, хотя в DOM он первый (на мобильных — сверху)
+    max-width: none;
+    margin-inline: 0;
+  }
+}
+
+.slab {
+  position: absolute;
+  inset: var(--o) 0 0 0;
+  background-color: $color-beige;
+  transform: translate(var(--o), calc(var(--o) * -1));
+  transition: transform 1.4s $ease-lux 0.3s;
+}
+
+.visible .slab {
+  transform: translate(0, 0);
+}
+
+.photoWrap {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background-color: $color-beige; // фолбэк, пока грузится фото
+  box-shadow: $shadow-card;
+}
+
+// Слой параллакса выше рамки на 5% — запас, чтобы край фото не открывался
+.parallax {
+  position: absolute;
+  inset: -5% 0;
+  transform: translate3d(0, calc(var(--p, 0) * -18px), 0);
+  will-change: transform;
+}
+
+.photo {
+  object-fit: cover;
+  transform: scale(1.08);
+  filter: brightness(1.22) contrast(0.92) saturate(0.88);
+  transition:
+    transform 2.2s $ease-lux,
+    filter 1.8s $ease-lux;
+  will-change: transform, filter;
+}
+
+.visible .photo {
+  transform: scale(1);
+  filter: none;
+}
+
+// ============================================================
+// ТЕКСТ
+// ============================================================
+.text {
+  min-width: 0;
+  max-width: 620px;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.9s $ease-lux var(--d, 0s),
+    transform 0.9s $ease-lux var(--d, 0s);
+}
+
+.visible .reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  @include eyebrow($ink-champagne);
+
+  &::before {
+    content: '';
+    flex: none;
+    width: 44px;
+    height: 1px;
+    background-color: $color-champagne;
+  }
+}
+
+.title {
+  margin-top: 22px;
+  font-size: clamp(30px, 4vw, 56px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+
+  // Имя — курсивом Cormorant: подпись автора
+  em {
+    font-size: 1.08em;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: $ink-accent;
+  }
+}
+
+.lead {
+  margin-top: 32px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: $color-charcoal;
+
+  @include media(tablet) {
+    font-size: 20px;
+  }
+}
+
+.body {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: $color-taupe;
+
+  @include media(tablet) {
+    font-size: 17px;
+  }
+}
+
+// Финальная мысль — курсив Cormorant, без линии (манифест из Introduction
+// уже использует её, здесь — спокойный акцент)
+.closing {
+  margin-top: 28px;
+  font-family: $font-accent;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(22px, 2.1vw, 28px);
+  line-height: 1.35;
+  color: $color-charcoal;
+  text-wrap: balance;
+}
+
+// ---------- Подпись: 15+ лет опыта · Индивидуальный подход · Лимассол, Кипр ----------
+.facts {
+  display: grid;
+  margin-top: 40px;
+  border-top: 1px solid rgba(180, 154, 122, 0.4);
+
+  @include media(tablet) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.fact {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 18px 0;
+
+  // Мобильные: строки с разделителями
+  & + & {
+    border-top: 1px solid rgba(180, 154, 122, 0.25);
+  }
+
+  // Tablet+: колонки с вертикальными разделителями
+  @include media(tablet) {
+    padding: 22px 16px 22px 0;
+
+    & + & {
+      padding-left: 20px;
+      border-top: none;
+      border-left: 1px solid rgba(180, 154, 122, 0.25);
+    }
+  }
+}
+
+.factBig {
+  font-family: $font-heading;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: $color-charcoal;
+}
+
+.factLabel {
+  font-family: $font-body;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $color-taupe;
+}
+
+.action {
+  margin-top: 40px;
+
+  // Специфичность 0-2-0 — уверенно перекрывает базовый .button из ScrollButton
+  .cta {
+    @include button;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .slab {
+    transform: none;
+  }
+
+  .parallax {
+    transform: none;
+  }
+
+  .photo {
+    transform: none;
+    filter: none;
+  }
+}

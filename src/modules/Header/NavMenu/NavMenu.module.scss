@@ -1,0 +1,46 @@
+.list {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.item {
+  list-style: none;
+}
+
+.link {
+  position: relative;
+  padding: 8px 0;
+  font-family: $font-body;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: $tracking-wide;
+  text-transform: uppercase;
+  color: inherit;
+  transition: color $transition-fast;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: $color-champagne;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform $transition-base;
+  }
+
+  &:hover {
+    color: $color-champagne;
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+.index {
+  display: none;
+}

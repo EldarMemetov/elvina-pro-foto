@@ -1,0 +1,50 @@
+{
+  "name": "elvina",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "i18next": "^24.2.2",
+    "i18next-fs-backend": "^2.6.0",
+    "i18next-resources-to-backend": "^1.2.1",
+    "next": "15.5.29",
+    "next-i18n-router": "^5.5.1",
+    "next-i18next": "^15.4.2",
+    "normalize-scss": "^8.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-i18next": "^15.4.1",
+    "react-icons": "^5.3.0",
+    "sass": "^1.85.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.23.0",
+    "@svgr/webpack": "^8.1.0",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "15.5.29",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-refresh": "^0.4.18",
+    "globals": "^16.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.4.2"
+  },
+  "overrides": {
+    "postcss": "^8.5.23"
+  },
+  "browserslist": [
+    "chrome >= 90",
+    "firefox >= 90",
+    "safari >= 15",
+    "edge >= 90",
+    "not dead",
+    "not ie 11"
+  ]
+}

@@ -1,0 +1,517 @@
+// Ширина, с которой текст и слоган/управление встают в две колонки.
+// (Стандартный desktop-брейкпоинт 1440px для этого слишком поздний —
+// на ноутбуках 1280–1366 нужен двухколоночный макет.)
+$wide: 1024px;
+
+// Плёночное зерно: SVG-шум, без внешних файлов
+$grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+
+// ============================================================
+// СЕКЦИЯ
+// Контент в потоке (не absolute) → Hero растёт под контент и
+// никогда не залезает под fixed-хедер. padding-top = хедер + запас.
+// ============================================================
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-top: 92px; // хедер 68px + запас
+  overflow: hidden;
+  isolation: isolate;
+  background-color: $color-charcoal; // фолбэк, пока грузится фото
+  color: var(--text-on-dark);
+  touch-action: pan-y pinch-zoom;
+
+  @include media(tablet) {
+    padding-top: 124px; // хедер 80px + запас под рамку видоискателя
+  }
+}
+
+// ============================================================
+// СЛОЙ 0 — фотографии
+// Контейнер слегка больше экрана и наклоняется за курсором
+// (перспектива + сдвиг), создавая глубину без WebGL.
+// ============================================================
+.slides {
+  position: absolute;
+  inset: -2%;
+  z-index: 0;
+  transform: perspective(1400px) rotateX(calc(var(--tilt-y, 0) * -1.4deg))
+    rotateY(calc(var(--tilt-x, 0) * 1.8deg))
+    translate3d(
+      calc(var(--tilt-x, 0) * -14px),
+      calc(var(--tilt-y, 0) * -10px),
+      0
+    )
+    scale(1.04);
+  transition: transform 0.9s $ease-lux;
+  will-change: transform;
+}
+
+// Кадр «проявляется»: из пересвеченного и плоского — в полный тон
+.slide {
+  object-fit: cover;
+  opacity: 0;
+  filter: brightness(1.28) contrast(0.92) saturate(0.88);
+  transition:
+    opacity 1.4s ease,
+    filter 1.8s $ease-lux;
+  will-change: opacity, transform;
+}
+
+.slideActive {
+  opacity: 1;
+  filter: none;
+  // длительность = время кадра + запас на кроссфейд, движение не «упирается»
+  animation: push-out calc(var(--autoplay, 6500ms) + 1.6s) $ease-lux both;
+}
+
+// Чередуем «отъезд» и «наезд», чтобы соседние кадры не двигались одинаково
+.slideAlt.slideActive {
+  animation-name: push-in;
+}
+
+@keyframes push-out {
+  from {
+    transform: scale(1.1);
+  }
+
+  to {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes push-in {
+  from {
+    transform: scale(1.02) translate3d(-1.2%, 0, 0);
+  }
+
+  to {
+    transform: scale(1.1) translate3d(1.2%, 0, 0);
+  }
+}
+
+// ============================================================
+// СЛОИ 1–2 — свет, скрим, зерно
+// ============================================================
+
+// Тёплый charcoal: верх держит хедер, низ и левый край держат текст
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(41, 38, 34, 0.55) 0%, rgba(41, 38, 34, 0) 26%),
+    linear-gradient(
+      0deg,
+      rgba(41, 38, 34, 0.84) 0%,
+      rgba(41, 38, 34, 0.42) 38%,
+      rgba(41, 38, 34, 0) 70%
+    ),
+    linear-gradient(90deg, rgba(41, 38, 34, 0.42) 0%, rgba(41, 38, 34, 0) 62%);
+}
+
+// Тёплый «световой подтёк» — как засвет на плёнке, медленно дрейфует
+.glow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    60% 50% at 82% 10%,
+    rgba(214, 182, 140, 0.6),
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+  opacity: 0.32;
+  animation: drift 16s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(-4%, 2%, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(4%, -2%, 0) scale(1.18);
+  }
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: $grain;
+  mix-blend-mode: overlay;
+  opacity: 0.12;
+}
+
+// ============================================================
+// СЛОЙ 3 — рамка видоискателя (только tablet+)
+// Верхние уголки начинаются ниже хедера.
+// ============================================================
+.frame {
+  display: none;
+  position: absolute;
+  inset: 92px 36px 32px;
+  z-index: 2;
+  pointer-events: none;
+
+  @include media(tablet) {
+    display: block;
+  }
+
+  span {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border: 0 solid rgba(245, 240, 232, 0.4);
+  }
+
+  .tl {
+    top: 0;
+    left: 0;
+    border-top-width: 1px;
+    border-left-width: 1px;
+  }
+
+  .tr {
+    top: 0;
+    right: 0;
+    border-top-width: 1px;
+    border-right-width: 1px;
+  }
+
+  .bl {
+    bottom: 0;
+    left: 0;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+  }
+
+  .br {
+    right: 0;
+    bottom: 0;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+  }
+}
+
+// ============================================================
+// СЛОЙ 4 — контент
+// Mobile/tablet: колонкой. ≥1024px: слева текст, справа слоган + управление.
+// Всё в одном потоке — наложений быть не может.
+// ============================================================
+.content {
+  @include container;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  width: 100%;
+  padding-bottom: 40px;
+
+  @include media(tablet) {
+    gap: 44px;
+    padding-bottom: 64px;
+  }
+
+  @media (min-width: $wide) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    column-gap: 40px;
+    align-items: end;
+    padding-bottom: 72px;
+  }
+
+  @include media(desktop) {
+    grid-template-columns: minmax(0, 1fr) 380px;
+    column-gap: 48px;
+  }
+}
+
+.main {
+  min-width: 0;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  @include eyebrow;
+
+  &::before {
+    content: '';
+    flex: none;
+    width: 44px;
+    height: 1px;
+    background-color: $color-champagne;
+  }
+}
+
+.title {
+  margin-top: 22px;
+  max-width: 780px;
+  font-size: clamp(32px, 8.4vw, 44px);
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  color: var(--text-on-dark);
+  text-shadow: 0 2px 32px rgba(41, 38, 34, 0.35);
+
+  @include media(tablet) {
+    font-size: clamp(44px, 5vw, 76px);
+  }
+
+  // Город — курсивом Cormorant, тёплым champagne: единственный акцент в H1
+  em {
+    font-size: 1.08em;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: color-mix(in srgb, #{$color-champagne} 62%, #{$color-ivory});
+  }
+}
+
+.desc {
+  margin-top: 24px;
+  max-width: 540px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(245, 240, 232, 0.84);
+
+  @include media(tablet) {
+    font-size: 18px;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 36px;
+
+  // Специфичность 0-2-0 — уверенно перекрывает базовый .button из модуля
+  .primary {
+    @include button(
+      $bg: $color-ivory,
+      $text: $color-charcoal,
+      $hover-bg: $btn-hover-bg,
+      $hover-text: $btn-hover-text
+    );
+  }
+
+  .secondary {
+    @include button(
+      $bg: transparent,
+      $text: currentColor,
+      $hover-bg: $btn-hover-bg,
+      $hover-text: $btn-hover-text
+    );
+
+    border-color: rgba(245, 240, 232, 0.45);
+
+    &:hover {
+      border-color: transparent;
+    }
+  }
+}
+
+// ---------- Подпись кадра + управление ----------
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+
+  @include media(tablet) {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  @media (min-width: $wide) {
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 36px;
+    text-align: right;
+  }
+}
+
+.caption {
+  display: grid;
+  gap: 12px;
+  max-width: 440px;
+
+  @media (min-width: $wide) {
+    justify-items: end;
+  }
+}
+
+// «01 / 05» с тонкой линией — как номер кадра на плёнке
+.slideIndex {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: $font-body;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  color: $color-champagne;
+
+  &::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background-color: currentColor;
+  }
+}
+
+// Слоганы лежат друг на друге в одной grid-ячейке — высота не прыгает
+.sloganLayer {
+  display: grid;
+}
+
+.slogan {
+  grid-area: 1 / 1;
+  font-family: $font-accent;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(22px, 2.1vw, 32px);
+  line-height: 1.35;
+  color: var(--text-on-dark);
+  text-shadow: 0 2px 24px rgba(41, 38, 34, 0.4);
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.7s $ease-lux,
+    transform 0.7s $ease-lux;
+}
+
+// Новая фраза появляется чуть позже кадра, уходящая гаснет сразу
+.sloganActive {
+  opacity: 1;
+  transform: translateY(0);
+  transition-duration: 0.9s;
+  transition-delay: 0.45s;
+}
+
+// ---------- Управление ----------
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.bars {
+  display: flex;
+  gap: 10px;
+}
+
+.bar {
+  position: relative;
+  width: 26px;
+  height: 2px;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgba(245, 240, 232, 0.28);
+  border: none;
+  cursor: pointer;
+  transition: background-color $transition-fast;
+
+  // Расширяем зону нажатия: полоска тонкая, пальцем попасть трудно
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -14px -3px;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: $color-champagne;
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  &:hover {
+    background-color: rgba(245, 240, 232, 0.5);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-champagne;
+    outline-offset: 4px;
+  }
+
+  @include media(tablet) {
+    width: 40px;
+  }
+}
+
+// Без автоплея (reduced motion) активная полоска просто залита
+.barActive::after {
+  transform: scaleX(1);
+}
+
+// Автоплей: заполнение полоски = таймер слайдера (смена по animationend)
+.autoplay .barActive::after {
+  transform: scaleX(0);
+  animation: bar-fill var(--autoplay, 6500ms) linear both;
+}
+
+@keyframes bar-fill {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+// Пауза (hover мышью / фокус с клавиатуры / вкладка в фоне):
+// замирает всё — полоска, движение кадра, световой подтёк
+.paused {
+  .barActive::after,
+  .slideActive,
+  .glow {
+    animation-play-state: paused;
+  }
+}
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  color: rgba(245, 240, 232, 0.85);
+  background-color: transparent;
+  border: 1px solid rgba(245, 240, 232, 0.28);
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    color $transition-fast,
+    border-color $transition-fast,
+    background-color $transition-fast;
+
+  &:hover {
+    color: $color-champagne;
+    border-color: rgba(180, 154, 122, 0.6);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-champagne;
+    outline-offset: 3px;
+  }
+}

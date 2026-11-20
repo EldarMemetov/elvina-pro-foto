@@ -1,0 +1,178 @@
+@use 'normalize-scss/sass/normalize' as *;
+@use '@/shared/styles/breakpoints' as bp;
+@use '@/shared/styles/variables' as *;
+@use '@/shared/styles/base' as *;
+@use '@/shared/styles/mixins' as *;
+
+// ============================================================
+// WARM IVORY LUXURY — общие строительные блоки
+// ============================================================
+
+// ---------- Контейнер ----------
+.container {
+  @include container;
+}
+
+// ---------- Секции: фоны по карте ----------
+.section {
+  position: relative;
+  scroll-margin-top: 96px; // якоря не прячутся под фиксированным хедером
+  padding-block: $pad-section-m;
+
+  @include media(tablet) {
+    padding-block: $pad-section-t;
+  }
+
+  @include media(desktop) {
+    padding-block: $pad-section-d;
+  }
+}
+
+.section-hero {
+  min-height: 100vh;
+  min-height: 100svh; // фотография на весь экран, графит — фолбэк под фото
+  background-color: section-bg(hero);
+}
+
+.section-introduction {
+  background-color: section-bg(introduction);
+}
+
+.section-about {
+  background-color: section-bg(about);
+}
+
+.section-services {
+  background-color: section-bg(services);
+}
+
+.section-portfolio {
+  background-color: section-bg(portfolio);
+}
+
+.section-experience {
+  background-color: section-bg(experience);
+}
+
+.section-locations {
+  background-color: section-bg(locations);
+}
+
+.section-testimonials {
+  background-color: section-bg(testimonials);
+}
+
+.section-faq {
+  background-color: section-bg(faq);
+}
+
+.section-contact {
+  background-color: section-bg(contact);
+}
+
+.section-footer {
+  background-color: section-bg(footer);
+}
+
+// Тёмные секции: текст светлеет, вторичный текст теплеет
+.section-hero,
+.section-experience,
+.section-contact,
+.section-footer {
+  color: var(--text-on-dark);
+  --text-secondary: #{$text-light-secondary};
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--text-on-dark);
+  }
+}
+
+// ---------- Кнопки ----------
+.btn {
+  @include button;
+}
+
+// Светлый вариант для тёмных секций
+.btn--light {
+  @include button(
+    $bg: $color-ivory,
+    $text: $color-charcoal,
+    $hover-bg: $btn-hover-bg,
+    $hover-text: $btn-hover-text
+  );
+}
+
+// Прозрачная с рамкой — поверх фотографий и тёмного фона
+.btn--ghost {
+  @include button(
+    $bg: transparent,
+    $text: currentColor,
+    $hover-bg: $btn-hover-bg,
+    $hover-text: $btn-hover-text
+  );
+
+  border-color: currentColor;
+}
+
+// ---------- Типографика-утилиты ----------
+.eyebrow {
+  @include eyebrow;
+}
+
+.accent-italic {
+  font-family: $font-accent;
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+// ---------- Плавные анимации появления ----------
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.anim-fade-up {
+  animation: fade-up 0.9s $ease-lux both;
+}
+
+.anim-fade-in {
+  animation: fade-in 1.2s $ease-lux both;
+}
+
+.anim-delay-1 {
+  animation-delay: 0.15s;
+}
+
+.anim-delay-2 {
+  animation-delay: 0.3s;
+}
+
+.anim-delay-3 {
+  animation-delay: 0.45s;
+}

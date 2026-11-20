@@ -1,0 +1,25 @@
+.logo {
+  position: relative;
+  z-index: 110;
+  font-family: $font-heading;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: inherit;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-champagne;
+  }
+
+  @include media(tablet) {
+    font-size: 30px;
+  }
+}
+
+.dot {
+  color: $color-champagne;
+  font-style: normal;
+}

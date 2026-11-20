@@ -1,0 +1,189 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  color: $text-primary;
+  background-color: rgba(245, 240, 232, 0.9);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(180, 154, 122, 0.22);
+  box-shadow: 0 8px 32px rgba(57, 51, 45, 0.06);
+  transition:
+    background-color $transition-base,
+    color $transition-base,
+    border-color $transition-base,
+    box-shadow $transition-base;
+
+  // Прозрачный режим поверх фотографии Hero: <Header overlay />
+  &:not(.solid) {
+    background-color: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-bottom-color: transparent;
+    box-shadow: none;
+    color: $text-light;
+  }
+}
+
+.inner {
+  @include container;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: 68px;
+
+  @include media(tablet) {
+    height: 80px;
+  }
+}
+
+.navDesktop {
+  display: none;
+
+  @include media(desktop) {
+    display: block;
+  }
+}
+
+.ctaDesktop {
+  display: none;
+
+  @include media(desktop) {
+    display: block;
+  }
+}
+
+.burger {
+  position: relative;
+  z-index: 110;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+
+  span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background-color: currentColor;
+    transition: transform $transition-fast;
+  }
+
+  &.open span:nth-child(1) {
+    transform: translateY(4.25px) rotate(45deg);
+  }
+
+  &.open span:nth-child(2) {
+    transform: translateY(-4.25px) rotate(-45deg);
+  }
+
+  @include media(desktop) {
+    display: none;
+  }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 110px $gutter 48px;
+  background-color: $color-ivory;
+  animation: overlay-in 0.4s $ease-lux both;
+
+  @include media(tablet) {
+    padding-inline: 40px;
+  }
+}
+
+.overlayNav {
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  a {
+    display: block;
+    padding: 10px 0;
+    font-family: $font-heading;
+    font-weight: 500;
+    font-size: 34px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: $text-primary;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-champagne;
+    }
+  }
+
+  a span {
+    display: inline-block;
+    margin-right: 16px;
+    font-family: $font-body;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: $tracking-eyebrow;
+    color: $color-champagne;
+    vertical-align: middle;
+  }
+
+  button {
+    margin-top: 40px;
+    width: 100%;
+  }
+
+  li {
+    animation: link-in 0.55s $ease-lux both;
+  }
+
+  @for $i from 1 through 6 {
+    li:nth-child(#{$i}) {
+      animation-delay: #{0.08 * $i + 0.05}s;
+    }
+  }
+
+  @include media(tablet) {
+    a {
+      font-size: 44px;
+    }
+  }
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes link-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

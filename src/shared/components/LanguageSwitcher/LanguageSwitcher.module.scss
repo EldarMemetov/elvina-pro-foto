@@ -1,0 +1,46 @@
+.languageSwitcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 11111;
+}
+
+.languageOption {
+  position: relative;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 500;
+  @include font(15, 20);
+  color: rgba(255, 255, 255, 0.6);
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease;
+
+  &:hover {
+    color: #fff;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.active {
+  color: #fff;
+  background: linear-gradient(
+    180deg,
+    rgba(2, 7, 157, 0.5) 0%,
+    rgba(150, 36, 226, 0.5) 47.28%,
+    rgba(206, 99, 235, 0.5) 82.32%,
+    rgba(239, 196, 251, 0.5) 100%
+  );
+}

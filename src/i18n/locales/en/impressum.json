@@ -1,0 +1,44 @@
+{
+  "title": "Legal Notice",
+  "credit": "\"Dieter macht den Datenschutz\" is a product of simply Legal GmbH, Burkarderstr. 36, D-97082 Würzburg. All rights reserved 2026.",
+  "sections": {
+    "provider": {
+      "title": "Provider",
+      "name": "Eldar Memetov",
+      "business": "",
+      "street": "Hauptlehrer-Urson-Straße 9",
+      "postalCode": "65439",
+      "city": "Flörsheim am Main",
+      "country": "Germany"
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "qvrix.studio@gmail.com",
+      "phone": "+49 176 21139129"
+    },
+    "media": {
+      "title": "Information on Audiovisual Media Services",
+      "country": "Country of establishment: Germany",
+      "authority": "Regulatory and supervisory authority: Medienanstalt Hessen"
+    },
+    "responsibility": {
+      "title": "Disclaimer",
+      "text": "We are responsible for the content of our websites in accordance with the general laws. All content is created with due care and to the best of our knowledge. Insofar as we refer to third-party websites via hyperlinks on our websites, we cannot guarantee the continued accuracy, correctness and completeness of the linked content, as this content lies outside our area of responsibility and we have no influence on its future design. If, in your opinion, any content violates applicable law or is inappropriate, please let us know.",
+      "law": "The legal notices on this page as well as all questions and disputes related to the design of this website are subject to the law of the Federal Republic of Germany."
+    },
+    "privacy": {
+      "title": "Privacy Notice",
+      "text": "You can find our privacy policy at:",
+      "url": "https://qvrix.com/de/privacy-policy"
+    },
+    "copyright": {
+      "title": "Copyright Notice",
+      "text": "The texts, images, photos, videos or graphics on our website are generally protected by copyright. Any unauthorized use (in particular the reproduction, editing or distribution) of these copyright-protected contents is therefore prohibited. If you intend to use this content or parts of it, please contact us in advance using the details provided above. Insofar as we are not the holder of the required copyright usage rights ourselves, we will endeavour to arrange contact with the rights holder."
+    },
+    "social": {
+      "title": "Social Media Profiles",
+      "intro": "This legal notice also applies to the following social media profiles:",
+      "instagramUrl": "https://www.instagram.com/videofilmer_frankfurt"
+    }
+  }
+}

@@ -1,0 +1,84 @@
+import '../globals.scss';
+
+import initTranslations from '@/i18n/utils/i18n';
+import TranslationsProvider from '@/i18n/utils/TranslationsProvider';
+import ErrorBoundaryWithTranslation from '@/shared/components/ErrorBoundary/ErrorBoundaryWithTranslation/ErrorBoundaryWithTranslation';
+
+import { NAMESPACES } from '@/shared/constants';
+import i18nConfig from '../../../i18nConfig';
+import { dir } from 'i18next';
+import SvgSpriteLoader from '@/shared/constants/SvgSpriteLoader/SvgSpriteLoader';
+import {
+  Manrope,
+  Playfair_Display,
+  Cormorant_Garamond,
+} from 'next/font/google';
+import clsx from 'clsx';
+import Header from '@/modules/Header/Header';
+import Footer from '@/modules/Footer/Footer';
+
+// Manrope — текст, меню, кнопки, интерфейс
+const manrope = Manrope({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+  variable: '--font-manrope',
+});
+
+// Playfair Display — заголовки
+const playfair = Playfair_Display({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-playfair',
+});
+
+// Cormorant Garamond — изысканные курсивные акценты
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['300', '400', '500', '600'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-cormorant',
+});
+
+export function generateStaticParams() {
+  return i18nConfig.locales.map((locale) => ({ locale }));
+}
+
+export default async function Layout({ children, params }) {
+  const { locale } = await Promise.resolve(params);
+
+  const langMap = { en: 'en', ru: 'ru' };
+  const htmlLang = langMap[locale] || 'ru';
+
+  const { resources } = await initTranslations(locale, NAMESPACES);
+
+  return (
+    <html lang={htmlLang} dir={dir(locale)}>
+      <body
+        suppressHydrationWarning={true}
+        className={clsx(
+          manrope.variable,
+          playfair.variable,
+          cormorant.variable
+        )}
+      >
+        <SvgSpriteLoader />
+
+        <TranslationsProvider
+          namespaces={NAMESPACES}
+          locale={locale}
+          resources={resources}
+        >
+          <ErrorBoundaryWithTranslation>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </ErrorBoundaryWithTranslation>
+        </TranslationsProvider>
+      </body>
+    </html>
+  );
+}

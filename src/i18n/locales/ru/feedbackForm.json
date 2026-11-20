@@ -1,0 +1,36 @@
+{
+  "title": "Lassen Sie uns",
+  "andTitle": "Ihr Projekt besprechen",
+  "description": "Erzählen Sie mir von Ihrer Idee – gemeinsam finden wir die passende Lösung für Ihr Unternehmen.",
+  "subtitle": "Antwort innerhalb von 24 Stunden",
+  "fields": {
+    "name": "Name*",
+    "email": "Deine E-Mail*",
+    "message": "Das sind deine Wünsche",
+    "agreeBefore": "Ich stimme der ",
+    "agreeLink": "Datenschutzerklärung",
+    "agreeAfter": " zu"
+  },
+  "submitButton": "Kontaktiere mich",
+  "successMessage": "Feedback erfolgreich gesendet!",
+  "errorMessage": "Es ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+  "status": {
+    "success": "Formular erfolgreich gesendet!",
+    "error": "Fehler beim Absenden des Formulars. Bitte versuche es erneut."
+  },
+  "validation": {
+    "name": {
+      "min": "Mindestens 3 Zeichen",
+      "required": "Bitte gib deinen Namen ein"
+    },
+    "email": {
+      "invalid": "Ungültiges E-Mail-Format",
+      "required": "Bitte gib deine E-Mail ein"
+    },
+    "message": {
+      "min": "Mindestens 10 Zeichen",
+      "required": "Bitte gib eine Nachricht ein"
+    },
+    "agree": "Du musst der Datenschutzerklärung zustimmen"
+  }
+}

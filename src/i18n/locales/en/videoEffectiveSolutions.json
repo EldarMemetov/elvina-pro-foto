@@ -1,0 +1,54 @@
+{
+  "spanTitle": "Effective ",
+  "title": "Video Solutions for Every Industry",
+  "description": "From concept to final delivery, I create cinematic videos and modern websites that help businesses attract attention, build trust and stand out from the competition.",
+  "solutions": [
+    {
+      "id": "music",
+      "title": "Music & Clips",
+      "info": "Cinematic music videos and artist content with dynamic storytelling."
+    },
+    {
+      "id": "fashion",
+      "title": "Fashion & Style",
+      "info": "Fashion films and branded content that elevate your visual identity."
+    },
+    {
+      "id": "podcasts",
+      "title": "Podcasts & Interviews",
+      "info": "Professional multi-camera podcasts and interviews with premium production."
+    },
+    {
+      "id": "conference",
+      "title": "Conferences & Events",
+      "info": "Event films and conference coverage that capture every important moment."
+    },
+    {
+      "id": "medicine",
+      "title": "Healthcare",
+      "info": "Professional healthcare videos for clinics, doctors and medical companies."
+    },
+    {
+      "id": "film",
+      "title": "Short Films",
+      "info": "Creative cinematic storytelling from concept to final production."
+    },
+    {
+      "id": "wedding",
+      "title": "Wedding & Love Story",
+      "info": "Emotional wedding films and timeless love stories with a cinematic style."
+    }
+  ],
+  "genresTitle": "Selected Work",
+  "genres": [
+    { "id": "commercial", "label": "Commercial" },
+    { "id": "healthcare", "label": "Healthcare" },
+    { "id": "podcasts", "label": "Podcasts & Interviews" },
+    { "id": "conference", "label": "Conferences & Events" },
+    { "id": "fashion", "label": "Fashion" },
+    { "id": "music", "label": "Music Videos" },
+    { "id": "film", "label": "Short Films" },
+    { "id": "wedding", "label": "Weddings & Love Stories" },
+    { "id": "websites", "label": "Websites" }
+  ]
+}

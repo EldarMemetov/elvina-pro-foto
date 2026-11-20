@@ -1,0 +1,16 @@
+{
+  "eyebrow": "About me",
+  "titleBefore": "I'm",
+  "name": "Eldar",
+  "location": "Frankfurt am Main, DE",
+  "paragraphs": [
+    "I'm a freelance videographer and web developer based in Frankfurt am Main, with over 12 years of experience creating commercial video content and modern websites.",
+    "I specialize in commercial video production, corporate films, advertising spots, social media content and modern website development. My goal is not just beautiful shots, but visual solutions that help businesses attract clients, build trust and present their services effectively.",
+    "I work with clients across Frankfurt, Germany and Europe — from local businesses to international projects. Open to both on-site productions and remote collaboration."
+  ],
+  "stats": [
+    { "value": "12+", "label": "Years of experience" },
+    { "value": "2-in-1", "label": "Video & Web" },
+    { "value": "EU", "label": "Working worldwide" }
+  ]
+}

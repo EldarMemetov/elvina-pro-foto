@@ -1,0 +1,192 @@
+.footer {
+  position: relative;
+  overflow: hidden;
+  background-color: $color-footer;
+  color: var(--text-on-dark);
+}
+
+.inner {
+  @include container;
+  position: relative;
+  z-index: 1;
+  padding-block: 80px 32px;
+
+  @include media(desktop) {
+    padding-block: 112px 40px;
+  }
+}
+
+.top {
+  display: grid;
+  gap: 56px;
+
+  @include media(tablet) {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+
+  @include media(desktop) {
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 72px;
+  }
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+
+  @include media(tablet) {
+    grid-column: 1 / -1;
+  }
+
+  @include media(desktop) {
+    grid-column: auto;
+  }
+}
+
+.tagline {
+  font-size: 16px;
+  line-height: 1.6;
+  color: $text-light-secondary;
+
+  em {
+    color: $color-champagne;
+  }
+}
+
+.socials {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.caption {
+  margin-bottom: 20px;
+  @include eyebrow;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  list-style: none;
+}
+
+.link {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 2px;
+  font-size: 15px;
+  color: $text-light-secondary;
+  transition: color $transition-fast;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: $color-champagne;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform $transition-base;
+  }
+
+  &:hover {
+    color: $color-champagne;
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+.socialLink {
+  @extend .link;
+
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: $tracking-wide;
+  text-transform: uppercase;
+}
+
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 72px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(245, 240, 232, 0.12);
+
+  @include media(desktop) {
+    margin-top: 96px;
+  }
+}
+
+.copy,
+.privacy {
+  font-size: 13px;
+  color: rgba(245, 240, 232, 0.45);
+}
+
+.privacy {
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-champagne;
+  }
+}
+
+.up {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  font-family: $font-body;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: $tracking-wide;
+  text-transform: uppercase;
+  color: $color-champagne;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color $transition-fast;
+
+  svg {
+    transition: transform $transition-base;
+  }
+
+  &:hover {
+    color: $color-ivory;
+
+    svg {
+      transform: translateY(-3px);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-champagne;
+    outline-offset: 3px;
+  }
+}
+
+// Гигантская подпись — фирменный штрих подвала
+.wordmark {
+  margin: 40px 0 -0.14em;
+  font-family: $font-heading;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(110px, 16vw, 240px);
+  line-height: 0.74;
+  text-align: center;
+  white-space: nowrap;
+  color: rgba(180, 154, 122, 0.1);
+  user-select: none;
+  pointer-events: none;
+}

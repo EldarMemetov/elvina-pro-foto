@@ -1,0 +1,207 @@
+@use './breakpoints' as *;
+@use './variables' as *;
+
+/*
+screen types:
+    mobile,
+    to-tablet
+    tablet,
+    to-desktop
+    desktop,
+*/
+@mixin media($_screen) {
+  @if $_screen == mobile {
+    @media screen and (min-width: $mobile) {
+      @content;
+    }
+  } @else if $_screen == to-tablet {
+    @media screen and (max-width: $to-tablet) {
+      @content;
+    }
+  } @else if $_screen == tablet {
+    @media screen and (min-width: $tablet) {
+      @content;
+    }
+  } @else if $_screen == to-desktop {
+    @media screen and (max-width: $to-desktop) {
+      @content;
+    }
+  } @else if $_screen == desktop {
+    @media screen and (min-width: $desktop) {
+      @content;
+    }
+  }
+}
+
+@mixin font($_fsz, $_lnh) {
+  font-size: #{$_fsz}px;
+  line-height: calc($_lnh / $_fsz);
+}
+
+@mixin cut-text($lines: 2) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}
+
+// Мягкий 3D-сдвиг карточек: тени тёплые, эффект спокойный
+@mixin hover-shift(
+  $x: 0px,
+  $y: 0px,
+  $z: 0px,
+  $rotateX: 0deg,
+  $rotateY: 0deg,
+  $scale: 1.04
+) {
+  transition:
+    transform 0.8s $ease-lux,
+    filter 0.5s ease,
+    box-shadow 0.5s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+
+  .listContent:hover & {
+    transform: translate3d($x, $y, $z) rotateX($rotateX) rotateY($rotateY)
+      scale($scale);
+    filter: brightness(1.04) saturate(1.02);
+    box-shadow: $shadow-hover;
+  }
+}
+
+// Заголовок: Playfair Display, Deep Charcoal (фолбэк градиента — сплошной цвет)
+@mixin titleText(
+  $fontColorFrom: $color-charcoal,
+  $fontColorTo: $color-charcoal,
+  $angle: 30deg
+) {
+  font-family: $font-heading;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  @include font(40, 52);
+  margin-bottom: 12px;
+
+  background: linear-gradient($angle, $fontColorFrom 0%, $fontColorTo 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  @include media(tablet) {
+    margin-bottom: 24px;
+    @include font(64, 80);
+  }
+
+  @include media(desktop) {
+    @include font(80, 100);
+  }
+}
+
+// Описательный текст: Manrope, Taupe — вторичный, не спорит с заголовками
+@mixin description {
+  font-family: $font-body;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 165%;
+  margin-bottom: 32px;
+  color: $color-taupe;
+
+  @include media(tablet) {
+    font-size: 18px;
+    margin-bottom: 48px;
+  }
+
+  @include media(desktop) {
+    font-size: 20px;
+    margin-bottom: 64px;
+  }
+}
+
+// Акцентный текст: перелиив ivory → champagne (для тёмных секций)
+@mixin gradientText($from: $color-ivory, $to: $color-champagne, $angle: 30deg) {
+  font-family: $font-heading;
+  background: linear-gradient($angle, $from 0%, $from 60%, $to 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+// Кнопка: графитовый фон, светлый текст, hover — мягкий переход в Champagne
+@mixin button(
+  $bg: $btn-bg,
+  $text: $btn-text,
+  $hover-bg: $btn-hover-bg,
+  $hover-text: $btn-hover-text,
+  $fsz: 14,
+  $pad: 18px 40px
+) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: $pad;
+  font-family: $font-body;
+  font-weight: 600;
+  @include font($fsz, $fsz);
+  letter-spacing: $tracking-wide;
+  text-transform: uppercase;
+  color: $text;
+  background-color: $bg;
+  border: 1px solid rgba(57, 51, 45, 0.12);
+  border-radius: $radius-s;
+  cursor: pointer;
+  transition:
+    background-color $transition-fast,
+    color $transition-fast,
+    border-color $transition-fast,
+    box-shadow $transition-base,
+    transform $transition-fast;
+
+  &:hover {
+    background-color: $hover-bg;
+    color: $hover-text;
+    border-color: transparent;
+    box-shadow: $shadow-hover;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-champagne;
+    outline-offset: 3px;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+}
+
+// Надзаголовок: тонкаяuppercase-строка над заголовком
+@mixin eyebrow($color: $color-champagne) {
+  font-family: $font-body;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: $tracking-eyebrow;
+  text-transform: uppercase;
+  color: $color;
+}
+
+// Контейнер страницы
+@mixin container($max: $container-max, $gutter: $gutter) {
+  width: 100%;
+  max-width: $max;
+  margin-inline: auto;
+  padding-inline: $gutter;
+
+  @include media(tablet) {
+    padding-inline: 40px;
+  }
+
+  @include media(desktop) {
+    padding-inline: 48px;
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "title": "Impressum",
+  "credit": "\"Dieter macht den Datenschutz\" ist ein Produkt der simply Legal GmbH, Burkarderstr. 36, D-97082 Würzburg. All rights reserved 2026.",
+  "sections": {
+    "provider": {
+      "title": "Anbieter",
+      "name": "Eldar Memetov",
+      "business": "",
+      "street": "Hauptlehrer-Urson-Straße 9",
+      "postalCode": "65439",
+      "city": "Flörsheim am Main",
+      "country": "Deutschland"
+    },
+    "contact": {
+      "title": "Kontakt",
+      "email": "qvrix.studio@gmail.com",
+      "phone": "+49 176 21139129"
+    },
+    "media": {
+      "title": "Angaben zu audiovisuellen Mediendiensten",
+      "country": "Sitzland: Deutschland",
+      "authority": "Regulierungs- und Aufsichtsbehörde: Medienanstalt Hessen"
+    },
+    "responsibility": {
+      "title": "Haftungsausschluss",
+      "text": "Wir sind für die Inhalte unserer Internetseiten nach den Maßgaben der allgemeinen Gesetzen verantwortlich. Alle Inhalte werden mit der gebotenen Sorgfalt und nach bestem Wissen erstellt. Soweit wir auf unseren Internetseiten mittels Hyperlink auf Internetseiten Dritter verweisen, können wir keine Gewähr für die fortwährende Aktualität, Richtigkeit und Vollständigkeit der verlinkten Inhalte übernehmen, da diese Inhalte außerhalb unseres Verantwortungsbereichs liegen und wir auf die zukünftige Gestaltung keinen Einfluss haben. Sollten aus Ihrer Sicht Inhalte gegen geltendes Recht verstoßen oder unangemessen sein, teilen Sie uns dies bitte mit.",
+      "law": "Die rechtlichen Hinweise auf dieser Seite sowie alle Fragen und Streitigkeiten im Zusammenhang mit der Gestaltung dieser Internetseite unterliegen dem Recht der Bundesrepublik Deutschland."
+    },
+    "privacy": {
+      "title": "Datenschutzhinweis",
+      "text": "Unsere Datenschutzerklärung finden Sie unter:",
+      "url": "https://qvrix.com/de/privacy-policy"
+    },
+    "copyright": {
+      "title": "Urheberrechtshinweis",
+      "text": "Die auf unserer Internetseite vorhandenen Texte, Bilder, Fotos, Videos oder Grafiken unterliegen in der Regel dem Schutz des Urheberrechts. Jede unberechtigte Verwendung (insbesondere die Vervielfältigung, Bearbeitung oder Verbreitung) dieser urheberrechtsgeschützten Inhalte ist daher untersagt. Wenn Sie beabsichtigen, diese Inhalte oder Teile davon zu verwenden, kontaktieren Sie uns bitte im Voraus unter den oben stehenden Angaben. Soweit wir nicht selbst Inhaber der benötigten urheberrechtlichen Nutzungsrechte sein sollten, bemühen wir uns, einen Kontakt zum Berechtigten zu vermitteln."
+    },
+    "social": {
+      "title": "Social-Media-Profile",
+      "intro": "Dieses Impressum gilt auch für folgende Social-Media-Profile:",
+      "instagramUrl": "https://www.instagram.com/videofilmer_frankfurt"
+    }
+  }
+}

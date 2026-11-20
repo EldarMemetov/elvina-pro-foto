@@ -1,0 +1,36 @@
+{
+  "title": "Let's Talk",
+  "andTitle": "About Your Project",
+  "description": "Tell me about your idea, and I'll help turn it into a solution that fits your business.",
+  "subtitle": "Response within 24 hours",
+  "fields": {
+    "name": "Name*",
+    "email": "Your Email*",
+    "message": "Tell me about your wishes",
+    "agreeBefore": "I agree to the ",
+    "agreeLink": "Privacy Policy",
+    "agreeAfter": ""
+  },
+  "submitButton": "Contact me",
+  "successMessage": "Message sent successfully!",
+  "errorMessage": "An error occurred. Please try again.",
+  "status": {
+    "success": "Form submitted successfully!",
+    "error": "Error submitting the form. Please try again."
+  },
+  "validation": {
+    "name": {
+      "min": "At least 3 characters",
+      "required": "Please enter your name"
+    },
+    "email": {
+      "invalid": "Invalid email format",
+      "required": "Please enter your email"
+    },
+    "message": {
+      "min": "At least 10 characters",
+      "required": "Please enter a message"
+    },
+    "agree": "You must agree to the Privacy Policy"
+  }
+}
