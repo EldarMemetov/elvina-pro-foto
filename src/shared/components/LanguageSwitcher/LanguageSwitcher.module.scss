@@ -1,46 +1,46 @@
+// Капсула в стиле сайта: тонкая рамка цвета текста шапки,
+// активный язык — графитовая «таблетка»
 .languageSwitcher {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid rgba(180, 154, 122, 0.55);
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  z-index: 11111;
 }
 
 .languageOption {
-  position: relative;
-  border: none;
+  min-width: 40px;
+  padding: 7px 12px;
+  font-family: $font-body;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  color: inherit;
   background: transparent;
-  cursor: pointer;
-  padding: 6px 14px;
+  border: none;
   border-radius: 999px;
-  font-weight: 500;
-  @include font(15, 20);
-  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  opacity: 0.7;
   transition:
-    color 0.25s ease,
-    background-color 0.25s ease;
+    color $transition-fast,
+    background-color $transition-fast,
+    opacity $transition-fast;
 
   &:hover {
-    color: #fff;
+    opacity: 1;
   }
 
-  &:focus {
-    outline: none;
+  &:focus-visible {
+    outline: 2px solid $color-champagne;
+    outline-offset: 2px;
   }
 }
 
 .active {
-  color: #fff;
-  background: linear-gradient(
-    180deg,
-    rgba(2, 7, 157, 0.5) 0%,
-    rgba(150, 36, 226, 0.5) 47.28%,
-    rgba(206, 99, 235, 0.5) 82.32%,
-    rgba(239, 196, 251, 0.5) 100%
-  );
+  color: $color-ivory;
+  background-color: $color-charcoal;
+  opacity: 1;
+  cursor: default;
 }

@@ -3,30 +3,34 @@ $wide: 1024px;
 $ink-champagne: color-mix(in srgb, #{$color-champagne} 42%, #{$color-charcoal});
 $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
 $ink-text: rgba(57, 51, 45, 0.76);
+$ink-muted: rgba(57, 51, 45, 0.62); // контраст ≥ 3:1 для крупного текста
+$line: rgba(57, 51, 45, 0.16);
 
 .locations {
   position: relative;
+  overflow: hidden;
 }
 
 .inner {
   display: grid;
-  gap: 56px;
+  gap: 48px;
 
   @include media(tablet) {
-    gap: 72px;
+    gap: 64px;
   }
 
   @media (min-width: $wide) {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    column-gap: 80px;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    column-gap: 72px;
     align-items: start;
   }
 
   @include media(desktop) {
-    column-gap: 112px;
+    column-gap: 104px;
   }
 }
 
+// ---------- Текст ----------
 .text {
   min-width: 0;
   max-width: 560px;
@@ -54,7 +58,7 @@ $ink-text: rgba(57, 51, 45, 0.76);
 
 .title {
   margin-top: 22px;
-  font-size: clamp(30px, 4vw, 54px);
+  font-size: clamp(30px, 4vw, 52px);
   line-height: 1.1;
   letter-spacing: -0.01em;
   text-wrap: balance;
@@ -69,7 +73,7 @@ $ink-text: rgba(57, 51, 45, 0.76);
 }
 
 .lead {
-  margin-top: 32px;
+  margin-top: 28px;
   font-size: 17px;
   line-height: 1.75;
   color: $color-charcoal;
@@ -80,7 +84,7 @@ $ink-text: rgba(57, 51, 45, 0.76);
 }
 
 .desc {
-  margin-top: 20px;
+  margin-top: 16px;
   font-size: 16px;
   line-height: 1.75;
   color: $ink-text;
@@ -91,96 +95,201 @@ $ink-text: rgba(57, 51, 45, 0.76);
 }
 
 .action {
-  margin-top: 40px;
-
-  .cta {
-    @include button;
-  }
+  margin-top: 32px;
 }
 
-.list {
+// ---------- Фото + список городов ----------
+.picker {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 36px 14px;
-  margin-bottom: 36px;
-
-  @include media(tablet) {
-    gap: 56px 32px;
-    margin-bottom: 56px;
-  }
-}
-
-.tile {
+  gap: 28px;
   min-width: 0;
 
-  &:nth-child(even) {
-    translate: 0 36px;
+  @include media(tablet) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 36px;
+    align-items: start;
+  }
 
-    @include media(tablet) {
-      translate: 0 56px;
-    }
+  @media (min-width: $wide) {
+    gap: 48px;
   }
 }
 
-.photo {
+.stage {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   background-color: $color-beige; // фолбэк, пока грузится фото
+
+  @include media(tablet) {
+    aspect-ratio: 4 / 5;
+  }
 }
 
+// Все фото лежат друг на друге, активное проявляется
 .img {
   object-fit: cover;
-  object-position: 50% 40%;
-  transition: transform 1.2s $ease-lux;
+  opacity: 0;
+  transform: scale(1.06);
+  transition:
+    opacity 0.9s ease,
+    transform 1.4s $ease-lux;
 }
 
-.caption {
-  margin-top: 18px;
+.imgActive {
+  opacity: 1;
+  transform: scale(1);
 }
 
-.name {
-  font-size: clamp(22px, 2.2vw, 30px);
+.shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    0deg,
+    rgba(41, 38, 34, 0.7) 0%,
+    rgba(41, 38, 34, 0.18) 34%,
+    rgba(41, 38, 34, 0) 58%
+  );
+}
+
+.stageCaption {
+  position: absolute;
+  inset: auto 20px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+  color: $color-ivory;
+}
+
+.stageName {
+  font-family: $font-heading;
+  font-weight: 500;
+  font-size: clamp(20px, 2vw, 26px);
   line-height: 1.15;
-  letter-spacing: -0.01em;
 }
 
-// Координаты — «картографическая» деталь
-.coords {
-  margin-top: 8px;
+.stageCoords {
   font-family: $font-body;
   font-weight: 600;
   font-size: 11px;
   letter-spacing: 0.18em;
-  color: $ink-champagne;
+  color: rgba(245, 240, 232, 0.85);
 }
 
-.rule {
-  display: block;
-  width: 32px;
-  height: 1px;
-  margin-top: 14px;
-  background-color: $color-champagne;
-  transition: width 0.9s $ease-lux;
+// ---------- Список городов ----------
+.list {
+  display: grid;
+  min-width: 0;
 }
 
-// Hover только там, где он есть (не на тач-устройствах)
-@media (hover: hover) {
-  .tile:hover {
-    .img {
-      transform: scale(1.05);
-    }
+.row {
+  position: relative;
+  border-top: 1px solid $line;
 
-    .rule {
-      width: 100%;
-    }
+  &:last-child {
+    border-bottom: 1px solid $line;
+  }
+
+  // Линия «заполняется» у активного города
+  &::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: $color-champagne;
+    transition: width 0.8s $ease-lux;
   }
 }
 
-// ============================================================
-// ПОЯВЛЕНИЕ ПРИ ПРОКРУТКЕ — только CSS (scroll-driven animations).
-// Без поддержки браузера или при reduced motion всё видно сразу.
-// ============================================================
+.rowActive::before {
+  width: 100%;
+}
+
+.heading {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.rowBtn {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  width: 100%;
+  padding: 20px 0;
+  color: inherit;
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.rowNum {
+  flex: none;
+  min-width: 20px;
+  font-family: $font-body;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: $ink-champagne;
+}
+
+.name {
+  font-family: $font-heading;
+  font-weight: 500;
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: $ink-muted;
+  transition:
+    color $transition-base,
+    translate $transition-base;
+}
+
+.rowActive .name {
+  color: $color-charcoal;
+  translate: 6px 0;
+}
+
+// Описание мест плавно раскрывается у активного города
+.spots {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.6s $ease-lux;
+}
+
+.rowActive .spots {
+  grid-template-rows: 1fr;
+}
+
+.spotsInner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.spotsText {
+  padding: 0 0 22px 36px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: $ink-text;
+
+  @include media(tablet) {
+    font-size: 16px;
+  }
+}
+
+@media (hover: hover) {
+  .rowBtn:hover .name {
+    color: $color-charcoal;
+  }
+}
+
+// ---------- Появление при прокрутке (только CSS) ----------
 @keyframes rise {
   from {
     opacity: 0;
@@ -196,7 +305,7 @@ $ink-text: rgba(57, 51, 45, 0.76);
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     .text,
-    .tile {
+    .picker {
       animation: rise linear both;
       animation-timeline: view();
       animation-range: entry 0% entry 45%;
@@ -204,7 +313,7 @@ $ink-text: rgba(57, 51, 45, 0.76);
 
     .text {
       @media (min-width: $wide) {
-        animation: none;
+        animation: none; // sticky-колонку не двигаем
       }
     }
   }

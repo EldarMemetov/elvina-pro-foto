@@ -6,14 +6,9 @@ import Experience from '@/modules/Experience/Experience';
 import Locations from '@/modules/Locations/Locations';
 import Faq from '@/modules/Faq/Faq';
 import Works from '@/modules/Works/Works';
+import Contact from '@/modules/Contact/Contact';
 
-export default async function Home({ params: rawParams }) {
-  const params = await rawParams;
-  const availableLocales = ['en', 'ru'];
-  const locale = availableLocales.includes(params?.locale)
-    ? params.locale
-    : 'en';
-
+export default function Home() {
   return (
     <div className={s.container}>
       <Hero />
@@ -23,6 +18,7 @@ export default async function Home({ params: rawParams }) {
       <Experience />
       <Locations />
       <Faq />
+      <Contact />
     </div>
   );
 }

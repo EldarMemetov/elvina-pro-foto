@@ -55,7 +55,16 @@
     display: block;
   }
 }
+// Правая группа: язык, кнопка «Забронировать», бургер
+.right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 
+  @include media(desktop) {
+    gap: 24px;
+  }
+}
 .burger {
   position: relative;
   z-index: 110;

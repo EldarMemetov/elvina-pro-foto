@@ -1,25 +1,35 @@
 import Container from '@/shared/container/Container';
+import ScrollButton from '@/shared/ScrollButton/ScrollButton';
 import styles from './Experience.module.scss';
 
-// Серверный компонент: весь текст и разметка попадают в HTML сразу,
-// JS для этой секции не нужен. Появление — чистый CSS.
-const ADVANTAGES = [
+// Серверный компонент: весь текст попадает в HTML сразу, JS нужен только кнопке.
+// Появление — чистый CSS.
+
+// Цифры. Пишем только то, что можно честно подтвердить.
+// ⚠ «7–10 дней» — уточни у Эльвины, сколько реально занимает отбор и обработка.
+const STATS = [
+  { value: '15+', label: 'лет профессионального опыта в фотографии' },
+  { value: '6', label: 'направлений съёмки: от свадеб до портретов' },
+  { value: '7–10', label: 'дней до готовой галереи с обработанными кадрами' },
+];
+
+// ⚠ Порядок работы — общий вариант, сверь с тем, как работает Эльвина.
+const STEPS = [
   {
-    big: '15+',
-    title: 'лет профессионального опыта',
-    text: 'Глубокое понимание фотографии, света, композиции и художественного подхода.',
+    title: 'Знакомство',
+    text: 'Вы пишете мне и рассказываете об идее. Обсуждаем формат, место и удобное время.',
   },
   {
-    title: 'Индивидуальная концепция',
-    text: 'Каждая съёмка создаётся с учётом ваших пожеланий, характера и желаемого результата.',
+    title: 'Подготовка',
+    text: 'Вместе выбираем локацию и образы. Подскажу, что надеть и когда лучше свет.',
   },
   {
-    title: 'Внимание к деталям',
-    text: 'От выбора локации и освещения до финальной обработки каждого кадра.',
+    title: 'Съёмка',
+    text: 'Спокойная атмосфера без спешки. Я направляю, вы чувствуете себя уверенно.',
   },
   {
-    title: 'Комфортная атмосфера',
-    text: 'Помогаю чувствовать себя уверенно перед камерой и получать удовольствие от процесса.',
+    title: 'Результат',
+    text: 'Отбираю лучшие кадры, делаю авторскую обработку и отправляю готовую галерею.',
   },
 ];
 
@@ -42,47 +52,65 @@ function Experience() {
             className={styles.title}
             data-testid="experience-title"
           >
-            Опыт, внимание и <em>индивидуальный подход</em>
+            15 лет опыта и <em>внимание к каждой детали</em>
           </h2>
 
           <p className={styles.lead}>
-            За каждой красивой фотографией стоит не только профессиональная
-            техника, но и умение увидеть человека, почувствовать момент и
-            создать правильную атмосферу.
-          </p>
-
-          <p className={styles.desc}>
-            Я уделяю особое внимание подготовке, деталям и комфорту клиента,
-            чтобы результат отражал именно вашу индивидуальность.
+            За красивой фотографией стоит не только техника, но и умение увидеть
+            человека, почувствовать момент и создать правильную атмосферу.
           </p>
         </header>
 
-        <ul
-          className={styles.list}
-          role="list"
-          data-testid="experience-advantages"
-        >
-          {ADVANTAGES.map(({ big, title, text }, i) => (
+        <ul className={styles.stats} role="list" data-testid="experience-stats">
+          {STATS.map(({ value, label }, i) => (
             <li
-              key={title}
-              className={styles.item}
+              key={label}
+              className={styles.stat}
               style={{ '--i': i }}
-              data-testid={`advantage-${i + 1}`}
+              data-testid={`stat-${i + 1}`}
             >
-              <span className={styles.num} aria-hidden="true">
-                {pad(i + 1)}
-              </span>
-
-              <h3 className={styles.name}>
-                {big && <span className={styles.big}>{big}</span>}
-                {big && ' '}
-                {title}
-              </h3>
-
-              <p className={styles.text}>{text}</p>
+              <span className={styles.value}>{value}</span>
+              <span className={styles.label}>{label}</span>
             </li>
           ))}
         </ul>
+
+        <div className={styles.process}>
+          <h3 className={styles.processTitle}>
+            Как проходит <em>съёмка</em>
+          </h3>
+
+          <ol
+            className={styles.steps}
+            role="list"
+            data-testid="experience-steps"
+          >
+            {STEPS.map(({ title, text }, i) => (
+              <li
+                key={title}
+                className={styles.step}
+                style={{ '--i': i }}
+                data-testid={`step-${i + 1}`}
+              >
+                <span className={styles.num} aria-hidden="true">
+                  {pad(i + 1)}
+                </span>
+                <h4 className={styles.name}>{title}</h4>
+                <p className={styles.text}>{text}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div className={styles.action}>
+          <ScrollButton
+            targetId="contact"
+            testId="experience-button"
+            className={styles.cta}
+          >
+            Записаться на съёмку
+          </ScrollButton>
+        </div>
       </Container>
     </section>
   );

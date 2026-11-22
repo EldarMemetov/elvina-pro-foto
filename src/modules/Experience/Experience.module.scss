@@ -34,6 +34,7 @@ $accent-light: color-mix(in srgb, #{$color-champagne} 70%, #{$color-ivory});
   }
 }
 
+// ---------- Заголовок ----------
 .head {
   max-width: 760px;
   margin-inline: auto;
@@ -42,10 +43,6 @@ $accent-light: color-mix(in srgb, #{$color-champagne} 70%, #{$color-ivory});
 
   @include media(tablet) {
     margin-bottom: 72px;
-  }
-
-  @media (min-width: $wide) {
-    margin-bottom: 88px;
   }
 }
 
@@ -83,37 +80,104 @@ $accent-light: color-mix(in srgb, #{$color-champagne} 70%, #{$color-ivory});
   }
 }
 
-// Первый абзац — манифест курсивом Cormorant
+// Манифест курсивом Cormorant
 .lead {
-  margin-top: 32px;
+  margin-top: 28px;
   font-family: $font-accent;
   font-style: italic;
   font-weight: 500;
-  font-size: clamp(22px, 2.4vw, 32px);
-  line-height: 1.35;
+  font-size: clamp(20px, 2.2vw, 28px);
+  line-height: 1.4;
   color: var(--text-on-dark);
   text-wrap: balance;
 }
 
-.desc {
-  max-width: 620px;
-  margin: 20px auto 0;
-  font-size: 16px;
-  line-height: 1.75;
-  color: $ink-light;
+// ---------- Цифры ----------
+.stats {
+  display: grid;
+  gap: 36px;
+  padding-bottom: 56px;
+  border-bottom: 1px solid $line;
 
   @include media(tablet) {
-    font-size: 17px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    padding-bottom: 72px;
   }
 }
 
-.list {
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+
+  @include media(tablet) {
+    padding-inline: 24px;
+
+    & + & {
+      border-left: 1px solid $line;
+    }
+  }
+}
+
+.value {
+  font-family: $font-accent;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(56px, 7vw, 96px);
+  line-height: 0.95;
+  color: $accent-light;
+}
+
+.label {
+  max-width: 260px;
+  margin-inline: auto;
+  font-size: 15px;
+  line-height: 1.6;
+  color: $ink-light;
+
+  @include media(tablet) {
+    font-size: 16px;
+  }
+}
+
+// ---------- Как проходит съёмка ----------
+.process {
+  margin-top: 64px;
+
+  @include media(tablet) {
+    margin-top: 88px;
+  }
+}
+
+.processTitle {
+  margin-bottom: 40px;
+  font-size: clamp(24px, 2.6vw, 36px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: var(--text-on-dark);
+
+  em {
+    font-size: 1.08em;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: $accent-light;
+  }
+
+  @include media(tablet) {
+    margin-bottom: 56px;
+  }
+}
+
+.steps {
   display: grid;
-  gap: 40px;
+  gap: 36px;
 
   @include media(tablet) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 56px 48px;
+    gap: 48px 40px;
   }
 
   @media (min-width: $wide) {
@@ -122,11 +186,12 @@ $accent-light: color-mix(in srgb, #{$color-champagne} 70%, #{$color-ivory});
   }
 }
 
-.item {
+.step {
   position: relative;
   padding-top: 28px;
   border-top: 1px solid $line;
 
+  // Короткая champagne-линия, при наведении растягивается
   &::before {
     content: '';
     position: absolute;
@@ -149,28 +214,15 @@ $accent-light: color-mix(in srgb, #{$color-champagne} 70%, #{$color-ivory});
 }
 
 .name {
-  margin-top: 18px;
+  margin-top: 16px;
   font-size: clamp(22px, 1.9vw, 26px);
   line-height: 1.25;
   letter-spacing: -0.01em;
-  text-wrap: balance;
   color: var(--text-on-dark);
 }
 
-.big {
-  display: block;
-  margin-bottom: 6px;
-  font-family: $font-accent;
-  font-style: italic;
-  font-weight: 500;
-  font-size: 2.3em;
-  line-height: 0.95;
-  letter-spacing: 0;
-  color: $accent-light;
-}
-
 .text {
-  margin-top: 14px;
+  margin-top: 12px;
   font-size: 15px;
   line-height: 1.7;
   color: $ink-light;
@@ -180,12 +232,34 @@ $accent-light: color-mix(in srgb, #{$color-champagne} 70%, #{$color-ivory});
   }
 }
 
+// ---------- Кнопка ----------
+.action {
+  display: flex;
+  justify-content: center;
+  margin-top: 56px;
+
+  @include media(tablet) {
+    margin-top: 72px;
+  }
+
+  // Специфичность 0-2-0 — перекрывает базовые стили ScrollButton
+  .cta {
+    @include button(
+      $bg: $color-ivory,
+      $text: $color-charcoal,
+      $hover-bg: $btn-hover-bg,
+      $hover-text: $btn-hover-text
+    );
+  }
+}
+
 @media (hover: hover) {
-  .item:hover::before {
+  .step:hover::before {
     width: 100%;
   }
 }
 
+// ---------- Появление при прокрутке (только CSS) ----------
 @keyframes rise {
   from {
     opacity: 0;
@@ -200,13 +274,16 @@ $accent-light: color-mix(in srgb, #{$color-champagne} 70%, #{$color-ivory});
 
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    .head {
+    .head,
+    .process > .processTitle,
+    .action {
       animation: rise linear both;
       animation-timeline: view();
       animation-range: entry 0% entry 50%;
     }
 
-    .item {
+    .stat,
+    .step {
       animation: rise linear both;
       animation-timeline: view();
       animation-range: entry calc(var(--i, 0) * 5%) entry

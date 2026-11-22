@@ -1,57 +1,66 @@
-import Image from 'next/image';
 import Container from '@/shared/container/Container';
 import ScrollButton from '@/shared/ScrollButton/ScrollButton';
+import LocationPicker from './LocationPicker';
 import styles from './Locations.module.scss';
 
-// Серверный компонент: весь текст и разметка попадают в HTML сразу.
-// Появление — чистый CSS, JS нужен только кнопке (ScrollButton).
+// Серверный компонент: весь текст попадает в HTML сразу (это важно для SEO).
+// Интерактивная часть (смена фото) вынесена в LocationPicker.
 //
-// Фото: /public/image/locations/*.jpg — вертикальные, лучше 4:5.
-// alt — описание кадра с названием города; поправь под реальные фото.
-// coords — координаты города (десятичные градусы), декоративная деталь.
+// Фото-заглушки из /public/image. Потом заменим на настоящие:
+// вертикальные кадры 4:5 (например, 1200×1500), до ~400 КБ.
+// coords — координаты города, декоративная деталь в подписи к фото.
 const LOCATIONS = [
   {
     name: 'Лимассол',
     coords: '34.71° N · 33.02° E',
-    image: '/image/locations/larnaka.jpg',
+    spots:
+      'Набережная Молос, старый город и порт, белые скалы Governor’s Beach. Тёплый свет и море рядом.',
+    image: '/image/hero-3.jpg',
     alt: 'Фотосессия в Лимассоле, Кипр',
+    position: '50% 35%',
   },
   {
     name: 'Пафос',
     coords: '34.78° N · 32.42° E',
+    spots:
+      'Петра ту Ромиу, гавань Пафоса, археологический парк. Скалы, море и античные декорации.',
     image: '/image/locations/larnaka.jpg',
     alt: 'Фотосессия в Пафосе, Кипр',
+    position: '50% 40%',
   },
   {
     name: 'Ларнака',
     coords: '34.92° N · 33.62° E',
-    image: '/image/locations/larnaka.jpg',
+    spots:
+      'Набережная Финикудес, Соляное озеро, улочки старого города. Лёгкая средиземноморская атмосфера.',
+    image: '/image/hero-1.jpg',
     alt: 'Фотосессия в Ларнаке, Кипр',
+    position: '40% 40%',
+  },
+  {
+    name: 'Айя-Напа и Протарас',
+    coords: '34.98° N · 34.00° E',
+    spots:
+      'Cape Greco, морские пещеры, Fig Tree Bay. Бирюзовая вода и золотой час на скалах.',
+    image: '/image/hero-3.jpg',
+    alt: 'Фотосессия в Айя-Напе и Протарасе, Кипр',
+    position: '70% 50%',
   },
   {
     name: 'Никосия',
     coords: '35.19° N · 33.38° E',
-    image: '/image/locations/larnaka.jpg',
+    spots:
+      'Венецианские стены, старый город, Лаики Геитония. Архитектура и городские портреты.',
+    image: '/image/introduction.jpg',
     alt: 'Фотосессия в Никосии, Кипр',
-  },
-  {
-    name: 'Айя-Напа',
-    coords: '34.98° N · 34.00° E',
-    image: '/image/locations/larnaka.jpg',
-    alt: 'Фотосессия в Айя-Напе, Кипр',
-  },
-  {
-    name: 'Протарас',
-    coords: '35.01° N · 34.06° E',
-    image: '/image/locations/larnaka.jpg',
-    alt: 'Фотосессия в Протарасе, Кипр',
+    position: '60% 30%',
   },
 ];
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
-  name: 'Єльвина — профессиональный фотограф',
+  name: 'Эльвина — профессиональный фотограф',
   serviceType: 'Фотосъёмка',
   description: 'Фотосессии в Лимассоле и по всему Кипру',
   areaServed: LOCATIONS.map(({ name }) => ({
@@ -87,60 +96,28 @@ function Locations() {
               className={styles.title}
               data-testid="locations-title"
             >
-              Красота Кипра — <em>идеальный фон</em> для вашей истории
+              Весь Кипр — <em>ваша съёмочная площадка</em>
             </h2>
 
             <p className={styles.lead}>
-              Кипр вдохновляет своей природой, средиземноморской атмосферой,
-              архитектурой и невероятным светом. Здесь можно создать совершенно
-              разные образы — от романтических фотографий на побережье до
-              элегантных городских и студийных портретов.
+              Работаю в Лимассоле и выезжаю по всему острову: от скал и бухт до
+              старых улочек и городских набережных.
             </p>
 
             <p className={styles.desc}>
-              Я провожу фотосессии в Лимассоле и других уголках острова, помогая
-              подобрать локацию, которая лучше всего подчеркнёт вашу идею.
+              Помогу выбрать место и время под нужный свет: золотой час на
+              побережье, мягкое утро в старом городе. Вам остаётся прийти и быть
+              собой.
             </p>
 
             <div className={styles.action}>
-              <ScrollButton
-                targetId="contact"
-                testId="locations-button"
-                className={styles.cta}
-              >
-                Обсудить локацию для съёмки
+              <ScrollButton targetId="contact" testId="locations-button">
+                Обсудить локацию
               </ScrollButton>
             </div>
           </div>
 
-          <ul className={styles.list} role="list" data-testid="locations-list">
-            {LOCATIONS.map(({ name, coords, image, alt }, i) => (
-              <li
-                key={name}
-                className={styles.tile}
-                data-testid={`location-${i + 1}`}
-              >
-                <div className={styles.photo}>
-                  <Image
-                    src={image}
-                    alt={alt}
-                    fill
-                    quality={80}
-                    sizes="(min-width: 1024px) 300px, (min-width: 768px) 40vw, 45vw"
-                    className={styles.img}
-                  />
-                </div>
-
-                <div className={styles.caption}>
-                  <h3 className={styles.name}>{name}</h3>
-                  <p className={styles.coords} aria-hidden="true">
-                    {coords}
-                  </p>
-                  <span className={styles.rule} aria-hidden="true" />
-                </div>
-              </li>
-            ))}
-          </ul>
+          <LocationPicker locations={LOCATIONS} />
         </div>
       </Container>
     </section>

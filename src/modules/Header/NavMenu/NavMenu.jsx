@@ -1,14 +1,7 @@
 import Link from 'next/link';
 import ScrollButton from '@/shared/ScrollButton/ScrollButton';
+import { NAV_LINKS } from '@/shared/constants/nav';
 import styles from './NavMenu.module.scss';
-
-const LINKS = [
-  { href: '/', label: 'Главная', id: 'home' },
-  { href: '#about', label: 'Обо мне', id: 'about' },
-  { href: '#services', label: 'Услуги', id: 'services' },
-  { href: '#portfolio', label: 'Портфолио', id: 'portfolio' },
-  { href: '#contact', label: 'Контакты', id: 'contacts' },
-];
 
 function NavMenu({ className = '', onLinkClick, withBooking = true }) {
   return (
@@ -18,7 +11,7 @@ function NavMenu({ className = '', onLinkClick, withBooking = true }) {
       data-testid="nav-menu"
     >
       <ul className={styles.list}>
-        {LINKS.map(({ href, label, id }, i) => (
+        {NAV_LINKS.map(({ href, label, id }, i) => (
           <li key={id} className={styles.item}>
             <Link
               href={href}

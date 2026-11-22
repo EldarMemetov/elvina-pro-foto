@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import ScrollButton from '@/shared/ScrollButton/ScrollButton';
 import Logo from '@/shared/Logo/Logo';
+import LanguageSwitcher from '@/shared/components/LanguageSwitcher/LanguageSwitcher';
 import NavMenu from './NavMenu/NavMenu';
 import styles from './Header.module.scss';
 
@@ -48,25 +49,29 @@ function Header({ overlay = false }) {
       className={`${styles.header} ${solid ? styles.solid : ''}`}
     >
       <div className={styles.inner}>
-        <Logo />
+        <Logo priority />
 
         <NavMenu className={styles.navDesktop} withBooking={false} />
 
-        <div className={styles.ctaDesktop}>
-          <ScrollButton targetId="contact" />
-        </div>
+        <div className={styles.right}>
+          <LanguageSwitcher />
 
-        <button
-          type="button"
-          data-testid="header-burger"
-          className={`${styles.burger} ${menuOpen ? styles.open : ''}`}
-          aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((v) => !v)}
-        >
-          <span />
-          <span />
-        </button>
+          <div className={styles.ctaDesktop}>
+            <ScrollButton targetId="contact" />
+          </div>
+
+          <button
+            type="button"
+            data-testid="header-burger"
+            className={`${styles.burger} ${menuOpen ? styles.open : ''}`}
+            aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            <span />
+            <span />
+          </button>
+        </div>
       </div>
 
       {mounted &&

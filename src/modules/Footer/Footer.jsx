@@ -1,29 +1,20 @@
 'use client';
 
+import { FaWhatsapp, FaTelegram, FaInstagram } from 'react-icons/fa';
 import Logo from '@/shared/Logo/Logo';
+import { NAV_LINKS } from '@/shared/constants/nav';
+import { CONTACTS, getChannels } from '@/shared/constants/contacts';
 import styles from './Footer.module.scss';
 
-// Синхронизируйте с LINKS в NavMenu
-const NAV_LINKS = [
-  { href: '/', label: 'Главная', id: 'home' },
-  { href: '#about', label: 'Обо мне', id: 'about' },
-  { href: '#services', label: 'Услуги', id: 'services' },
-  { href: '#portfolio', label: 'Портфолио', id: 'portfolio' },
-  { href: '#contact', label: 'Контакты', id: 'contacts' },
-];
-
-// Замените на свои контакты и ссылки на соцсети
-const CONTACTS = {
-  email: 'hello@photo.studio',
-  phone: '+7 000 000-00-00',
-  socials: [
-    { label: 'Telegram', href: '#', id: 'telegram' },
-    { label: 'Instagram', href: '#', id: 'instagram' },
-    { label: 'WhatsApp', href: '#', id: 'whatsapp' },
-  ],
+const ICONS = {
+  whatsapp: FaWhatsapp,
+  telegram: FaTelegram,
+  instagram: FaInstagram,
 };
 
 function Footer() {
+  const { messengers, phone, email } = getChannels();
+
   const scrollTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -33,24 +24,31 @@ function Footer() {
       <div className={styles.inner}>
         <div className={styles.top}>
           <div className={styles.brand}>
-            <Logo />
+            <Logo light />
+
             <p className={styles.tagline}>
-              Свадебная и <em>портретная</em> фотография
+              Свадебная и <em>портретная</em> фотография на Кипре
             </p>
+
             <ul className={styles.socials}>
-              {CONTACTS.socials.map(({ label, href, id }) => (
-                <li key={id}>
-                  <a
-                    href={href}
-                    data-testid={`footer-social-${id}`}
-                    className={styles.socialLink}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {label}
-                  </a>
-                </li>
-              ))}
+              {messengers.map(({ label, href, id }) => {
+                const Icon = ICONS[id];
+
+                return (
+                  <li key={id}>
+                    <a
+                      href={href}
+                      data-testid={`footer-social-${id}`}
+                      className={styles.social}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${label} (откроется в новой вкладке)`}
+                    >
+                      <Icon aria-hidden="true" />
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -74,23 +72,30 @@ function Footer() {
           <div className={styles.group}>
             <p className={styles.caption}>Контакты</p>
             <ul className={styles.list}>
+              {phone && (
+                <li>
+                  <a
+                    href={phone.href}
+                    data-testid="footer-phone"
+                    className={styles.link}
+                  >
+                    {phone.value}
+                  </a>
+                </li>
+              )}
+              {email && (
+                <li>
+                  <a
+                    href={email.href}
+                    data-testid="footer-email"
+                    className={styles.link}
+                  >
+                    {email.value}
+                  </a>
+                </li>
+              )}
               <li>
-                <a
-                  href={`mailto:${CONTACTS.email}`}
-                  data-testid="footer-email"
-                  className={styles.link}
-                >
-                  {CONTACTS.email}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`tel:${CONTACTS.phone.replace(/[^+\d]/g, '')}`}
-                  data-testid="footer-phone"
-                  className={styles.link}
-                >
-                  {CONTACTS.phone}
-                </a>
+                <span className={styles.text}>{CONTACTS.city}</span>
               </li>
             </ul>
           </div>
@@ -98,11 +103,9 @@ function Footer() {
 
         <div className={styles.bottom}>
           <p className={styles.copy}>
-            © {new Date().getFullYear()} фото. Все права защищены
+            © {new Date().getFullYear()} {CONTACTS.name}. Все права защищены
           </p>
-          <a href="#" data-testid="footer-privacy" className={styles.privacy}>
-            Политика конфиденциальности
-          </a>
+
           <button
             type="button"
             data-testid="footer-up-button"
@@ -128,10 +131,6 @@ function Footer() {
           </button>
         </div>
       </div>
-
-      <p className={styles.wordmark} aria-hidden="true">
-        фото.
-      </p>
     </footer>
   );
 }

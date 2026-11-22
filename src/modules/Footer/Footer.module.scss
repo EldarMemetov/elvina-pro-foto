@@ -2,27 +2,49 @@
   position: relative;
   overflow: hidden;
   background-color: $color-footer;
+  background-image: radial-gradient(
+    60% 80% at 15% 0%,
+    rgba(180, 154, 122, 0.12),
+    transparent 70%
+  );
   color: var(--text-on-dark);
+
+  // Тонкая champagne-линия сверху: аккуратная граница с секцией выше
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(180, 154, 122, 0.5),
+      transparent
+    );
+  }
 }
 
 .inner {
   @include container;
   position: relative;
   z-index: 1;
-  padding-block: 80px 32px;
+  padding-block: 72px 28px;
 
   @include media(desktop) {
-    padding-block: 112px 40px;
+    padding-block: 104px 36px;
   }
 }
 
+// ---------- Колонки ----------
 .top {
   display: grid;
-  gap: 56px;
+  gap: 48px;
 
   @include media(tablet) {
     grid-template-columns: 1fr 1fr;
-    gap: 64px;
+    gap: 56px 64px;
   }
 
   @include media(desktop) {
@@ -46,9 +68,14 @@
   }
 }
 
+// Слоган курсивом Cormorant, как в остальных секциях
 .tagline {
-  font-size: 16px;
-  line-height: 1.6;
+  max-width: 360px;
+  font-family: $font-accent;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(22px, 2vw, 26px);
+  line-height: 1.35;
   color: $text-light-secondary;
 
   em {
@@ -56,12 +83,42 @@
   }
 }
 
+// ---------- Соцсети: круглые иконки ----------
 .socials {
   display: flex;
-  gap: 24px;
+  gap: 12px;
   list-style: none;
 }
 
+.social {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  font-size: 18px;
+  color: rgba(245, 240, 232, 0.85);
+  border: 1px solid rgba(245, 240, 232, 0.2);
+  border-radius: 50%;
+  transition:
+    color $transition-fast,
+    background-color $transition-fast,
+    border-color $transition-fast,
+    transform $transition-fast;
+
+  &:hover {
+    color: $color-charcoal;
+    background-color: $color-champagne;
+    border-color: $color-champagne;
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-champagne;
+    outline-offset: 3px;
+  }
+}
+
+// ---------- Навигация и контакты ----------
 .caption {
   margin-bottom: 20px;
   @include eyebrow;
@@ -104,42 +161,32 @@
   }
 }
 
-.socialLink {
-  @extend .link;
-
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: $tracking-wide;
-  text-transform: uppercase;
+// Обычный текст в колонке контактов (город): без подчёркивания
+.text {
+  display: inline-block;
+  font-size: 15px;
+  color: $text-light-secondary;
 }
 
+// ---------- Нижняя строка ----------
 .bottom {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-top: 72px;
+  margin-top: 56px;
   padding-top: 28px;
   border-top: 1px solid rgba(245, 240, 232, 0.12);
 
   @include media(desktop) {
-    margin-top: 96px;
+    margin-top: 80px;
   }
 }
 
-.copy,
-.privacy {
+.copy {
   font-size: 13px;
-  color: rgba(245, 240, 232, 0.45);
-}
-
-.privacy {
-  transition: color $transition-fast;
-
-  &:hover {
-    color: $color-champagne;
-  }
+  color: rgba(245, 240, 232, 0.5);
 }
 
 .up {
@@ -174,19 +221,4 @@
     outline: 2px solid $color-champagne;
     outline-offset: 3px;
   }
-}
-
-// Гигантская подпись — фирменный штрих подвала
-.wordmark {
-  margin: 40px 0 -0.14em;
-  font-family: $font-heading;
-  font-style: italic;
-  font-weight: 500;
-  font-size: clamp(110px, 16vw, 240px);
-  line-height: 0.74;
-  text-align: center;
-  white-space: nowrap;
-  color: rgba(180, 154, 122, 0.1);
-  user-select: none;
-  pointer-events: none;
 }
