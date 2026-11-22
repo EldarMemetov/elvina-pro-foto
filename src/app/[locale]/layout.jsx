@@ -5,6 +5,7 @@ import TranslationsProvider from '@/i18n/utils/TranslationsProvider';
 import ErrorBoundaryWithTranslation from '@/shared/components/ErrorBoundary/ErrorBoundaryWithTranslation/ErrorBoundaryWithTranslation';
 
 import { NAMESPACES } from '@/shared/constants';
+import { SITE_URL, SITE_NAME } from '@/shared/constants/site';
 import i18nConfig from '../../../i18nConfig';
 import { dir } from 'i18next';
 import SvgSpriteLoader from '@/shared/constants/SvgSpriteLoader/SvgSpriteLoader';
@@ -45,6 +46,49 @@ const cormorant = Cormorant_Garamond({
 
 export function generateStaticParams() {
   return i18nConfig.locales.map((locale) => ({ locale }));
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#39332d',
+};
+
+export async function generateMetadata({ params }) {
+  const { locale } = await Promise.resolve(params);
+
+  const indexable = locale === 'ru';
+
+  const title = 'Фотограф в Лимассоле, Кипр — свадьбы, семьи, портреты';
+  const description =
+    'Профессиональный фотограф в Лимассоле, 15+ лет опыта. Свадебная, семейная и портретная съёмка, Love Story по всему Кипру. Запишитесь на съёмку.';
+  const ogImage = '/image/hero-2.jpg';
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title,
+    description,
+    applicationName: SITE_NAME,
+    alternates: { canonical: `/${locale}` },
+    openGraph: {
+      type: 'website',
+      locale: 'ru_RU',
+      url: `/${locale}`,
+      siteName: SITE_NAME,
+      title,
+      description,
+      images: [{ url: ogImage, alt: title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
+    robots: indexable
+      ? { index: true, follow: true }
+      : { index: false, follow: false },
+  };
 }
 
 export default async function Layout({ children, params }) {

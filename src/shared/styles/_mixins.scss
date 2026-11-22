@@ -127,24 +127,27 @@ screen types:
 }
 
 // Кнопка: графитовый фон, светлый текст, hover — мягкий переход в Champagne
+// Кнопка: графит → champagne. Компактная, зона нажатия 44px (удобно пальцем)
 @mixin button(
   $bg: $btn-bg,
   $text: $btn-text,
   $hover-bg: $btn-hover-bg,
   $hover-text: $btn-hover-text,
-  $fsz: 14,
-  $pad: 18px 40px
+  $fsz: 12,
+  $pad: 12px 24px
 ) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
+  min-height: 44px;
   padding: $pad;
   font-family: $font-body;
   font-weight: 600;
   @include font($fsz, $fsz);
-  letter-spacing: $tracking-wide;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  text-align: center;
   color: $text;
   background-color: $bg;
   border: 1px solid rgba(57, 51, 45, 0.12);
@@ -157,11 +160,16 @@ screen types:
     box-shadow $transition-base,
     transform $transition-fast;
 
+  @include media(tablet) {
+    padding-inline: 28px;
+    @include font(13, 13);
+  }
+
   &:hover {
     background-color: $hover-bg;
     color: $hover-text;
     border-color: transparent;
-    box-shadow: $shadow-hover;
+    box-shadow: 0 12px 28px rgba(57, 51, 45, 0.18);
   }
 
   &:active {
