@@ -1,16 +1,7 @@
-// Ширина, с которой текст и слоган/управление встают в две колонки.
-// (Стандартный desktop-брейкпоинт 1440px для этого слишком поздний —
-// на ноутбуках 1280–1366 нужен двухколоночный макет.)
 $wide: 1024px;
 
-// Плёночное зерно: SVG-шум, без внешних файлов
 $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
 
-// ============================================================
-// СЕКЦИЯ
-// Контент в потоке (не absolute) → Hero растёт под контент и
-// никогда не залезает под fixed-хедер. padding-top = хедер + запас.
-// ============================================================
 .hero {
   position: relative;
   display: flex;
@@ -18,23 +9,18 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
   justify-content: flex-end;
   min-height: 100vh;
   min-height: 100svh;
-  padding-top: 92px; // хедер 68px + запас
+  padding-top: 92px;
   overflow: hidden;
   isolation: isolate;
-  background-color: $color-charcoal; // фолбэк, пока грузится фото
+  background-color: $color-charcoal;
   color: var(--text-on-dark);
   touch-action: pan-y pinch-zoom;
 
   @include media(tablet) {
-    padding-top: 124px; // хедер 80px + запас под рамку видоискателя
+    padding-top: 124px;
   }
 }
 
-// ============================================================
-// СЛОЙ 0 — фотографии
-// Контейнер слегка больше экрана и наклоняется за курсором
-// (перспектива + сдвиг), создавая глубину без WebGL.
-// ============================================================
 .slides {
   position: absolute;
   inset: -2%;
@@ -51,7 +37,6 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
   will-change: transform;
 }
 
-// Кадр «проявляется»: из пересвеченного и плоского — в полный тон
 .slide {
   object-fit: cover;
   opacity: 0;
@@ -65,11 +50,10 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
 .slideActive {
   opacity: 1;
   filter: none;
-  // длительность = время кадра + запас на кроссфейд, движение не «упирается»
+
   animation: push-out calc(var(--autoplay, 6500ms) + 1.6s) $ease-lux both;
 }
 
-// Чередуем «отъезд» и «наезд», чтобы соседние кадры не двигались одинаково
 .slideAlt.slideActive {
   animation-name: push-in;
 }
@@ -94,11 +78,6 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
   }
 }
 
-// ============================================================
-// СЛОИ 1–2 — свет, скрим, зерно
-// ============================================================
-
-// Тёплый charcoal: верх держит хедер, низ и левый край держат текст
 .scrim {
   position: absolute;
   inset: 0;
@@ -114,7 +93,6 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
     linear-gradient(90deg, rgba(41, 38, 34, 0.42) 0%, rgba(41, 38, 34, 0) 62%);
 }
 
-// Тёплый «световой подтёк» — как засвет на плёнке, медленно дрейфует
 .glow {
   position: absolute;
   inset: 0;
@@ -150,10 +128,6 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
   opacity: 0.12;
 }
 
-// ============================================================
-// СЛОЙ 3 — рамка видоискателя (только tablet+)
-// Верхние уголки начинаются ниже хедера.
-// ============================================================
 .frame {
   display: none;
   position: absolute;
@@ -201,13 +175,7 @@ $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width=
   }
 }
 
-// ============================================================
-// СЛОЙ 4 — контент
-// Mobile/tablet: колонкой. ≥1024px: слева текст, справа слоган + управление.
-// Всё в одном потоке — наложений быть не может.
-// ============================================================
 .content {
-  @include container;
   position: relative;
   z-index: 2;
   display: flex;

@@ -1,19 +1,13 @@
-// Двухколоночный макет с 1024px (стандартный desktop 1440px — слишком поздно
-// для ноутбуков 1280–1366)
 $wide: 1024px;
 
-// Champagne на светлом фоне слишком бледный для мелкого текста —
-// для текста берём его более глубокий оттенок, для линий оставляем чистый
 $ink-champagne: color-mix(in srgb, #{$color-champagne} 55%, #{$color-charcoal});
 $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
 
-// Фон, паддинги и scroll-margin даёт глобальный .section.section-introduction
 .introduction {
-  overflow: hidden; // уголки и масштаб фото не создают горизонтальный скролл
+  overflow: hidden;
 }
 
 .inner {
-  @include container;
   display: grid;
   gap: 56px;
 
@@ -32,12 +26,8 @@ $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
   }
 }
 
-// ============================================================
-// ФОТО
-// «Проявляется» при появлении в зоне видимости — как в Hero
-// ============================================================
 .media {
-  --o: 10px; // вынос уголков за край фото
+  --o: 10px;
   position: relative;
   width: 100%;
   max-width: 520px;
@@ -57,7 +47,7 @@ $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
   position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  background-color: $color-beige; // фолбэк, пока грузится фото
+  background-color: $color-beige;
   box-shadow: $shadow-card;
 }
 
@@ -123,16 +113,11 @@ $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
   opacity: 1;
 }
 
-// ============================================================
-// ТЕКСТ
-// Ритм: заголовок → абзац → пулл-квота (манифест) → тихая концовка
-// ============================================================
 .text {
   min-width: 0;
   max-width: 580px;
 }
 
-// Плавное появление; на reduced-motion показываем сразу
 .reveal {
   opacity: 0;
   transform: translateY(24px);
@@ -188,7 +173,6 @@ $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
   }
 }
 
-// Манифест — курсив Cormorant, тонкая линия champagne слева
 .quote {
   margin-top: 32px;
   padding-left: 24px;

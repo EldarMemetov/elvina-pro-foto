@@ -1,18 +1,13 @@
-// Двухколоночный макет с 1024px (стандартный desktop 1440px — слишком поздно
-// для ноутбуков 1280–1366)
 $wide: 1024px;
 
-// Для мелкого текста на светлом фоне берём более глубокий champagne
 $ink-champagne: color-mix(in srgb, #{$color-champagne} 55%, #{$color-charcoal});
 $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
 
-// Фон (white), паддинги и scroll-margin даёт глобальный .section.section-about
 .about {
-  overflow: hidden; // подложка и параллакс не создают горизонтальный скролл
+  overflow: hidden;
 }
 
 .inner {
-  @include container;
   display: grid;
   gap: 64px;
 
@@ -20,7 +15,6 @@ $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
     gap: 80px;
   }
 
-  // Зеркало к Introduction: текст слева (шире), портрет справа
   @media (min-width: $wide) {
     grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
     gap: 88px;
@@ -32,18 +26,13 @@ $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
   }
 }
 
-// ============================================================
-// ПОРТРЕТ
-// Подложка-паспарту + фото, которое «проявляется» и слегка
-// смещается внутри рамки при прокрутке.
-// ============================================================
 .media {
-  --o: 14px; // вынос подложки
+  --o: 14px;
   position: relative;
   width: 100%;
   max-width: 520px;
   margin-inline: auto;
-  // подложка уходит влево-вниз, поэтому оставляем ей место
+
   padding: 0 0 var(--o) var(--o);
 
   @include media(tablet) {
@@ -51,7 +40,7 @@ $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
   }
 
   @media (min-width: $wide) {
-    order: 2; // портрет справа, хотя в DOM он первый (на мобильных — сверху)
+    order: 2;
     max-width: none;
     margin-inline: 0;
   }
@@ -73,11 +62,10 @@ $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
   position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  background-color: $color-beige; // фолбэк, пока грузится фото
+  background-color: $color-beige;
   box-shadow: $shadow-card;
 }
 
-// Слой параллакса выше рамки на 5% — запас, чтобы край фото не открывался
 .parallax {
   position: absolute;
   inset: -5% 0;
@@ -100,9 +88,6 @@ $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
   filter: none;
 }
 
-// ============================================================
-// ТЕКСТ
-// ============================================================
 .text {
   min-width: 0;
   max-width: 620px;
@@ -144,7 +129,6 @@ $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
   text-wrap: balance;
   overflow-wrap: break-word;
 
-  // Имя — курсивом Cormorant: подпись автора
   em {
     font-size: 1.08em;
     font-weight: 500;
@@ -175,8 +159,6 @@ $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
   }
 }
 
-// Финальная мысль — курсив Cormorant, без линии (манифест из Introduction
-// уже использует её, здесь — спокойный акцент)
 .closing {
   margin-top: 28px;
   font-family: $font-accent;
@@ -188,7 +170,6 @@ $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
   text-wrap: balance;
 }
 
-// ---------- Подпись: 15+ лет опыта · Индивидуальный подход · Лимассол, Кипр ----------
 .facts {
   display: grid;
   margin-top: 40px;
@@ -205,12 +186,10 @@ $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
   gap: 12px;
   padding: 18px 0;
 
-  // Мобильные: строки с разделителями
   & + & {
     border-top: 1px solid rgba(180, 154, 122, 0.25);
   }
 
-  // Tablet+: колонки с вертикальными разделителями
   @include media(tablet) {
     padding: 22px 16px 22px 0;
 
@@ -244,7 +223,6 @@ $ink-accent: color-mix(in srgb, #{$color-champagne} 78%, #{$color-charcoal});
 .action {
   margin-top: 40px;
 
-  // Специфичность 0-2-0 — уверенно перекрывает базовый .button из ScrollButton
   .cta {
     @include button;
   }

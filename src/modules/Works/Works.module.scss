@@ -1,0 +1,317 @@
+$wide: 1024px;
+
+$ink-champagne: color-mix(in srgb, #{$color-champagne} 38%, #{$color-charcoal});
+$ink-accent: color-mix(in srgb, #{$color-champagne} 70%, #{$color-charcoal});
+$accent-light: color-mix(in srgb, #{$color-champagne} 70%, #{$color-ivory});
+$ink-text: rgba(57, 51, 45, 0.76);
+$line: rgba(57, 51, 45, 0.16);
+
+.works {
+  overflow: hidden;
+}
+
+.head {
+  display: grid;
+  gap: 24px;
+  margin-bottom: 40px;
+
+  @include media(tablet) {
+    margin-bottom: 56px;
+  }
+
+  @media (min-width: $wide) {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    column-gap: 80px;
+    align-items: end;
+    margin-bottom: 64px;
+  }
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  @include eyebrow($ink-champagne);
+
+  &::before {
+    content: '';
+    flex: none;
+    width: 44px;
+    height: 1px;
+    background-color: $color-champagne;
+  }
+}
+
+.title {
+  margin-top: 22px;
+  max-width: 720px;
+  font-size: clamp(30px, 4vw, 56px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+
+  em {
+    font-size: 1.08em;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: $ink-accent;
+  }
+}
+
+.desc {
+  max-width: 520px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: $ink-text;
+
+  @include media(tablet) {
+    font-size: 17px;
+  }
+}
+
+.photos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 28px; // место под сдвинутые чётные кадры
+
+  @include media(tablet) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+
+  @media (min-width: $wide) {
+    gap: 28px;
+  }
+}
+
+.photo {
+  min-width: 0;
+
+  &:nth-child(even) {
+    translate: 0 28px;
+
+    @include media(tablet) {
+      translate: 0 48px;
+    }
+  }
+
+  &:nth-child(1) .frame {
+    aspect-ratio: 3 / 4;
+  }
+
+  &:nth-child(2) .frame {
+    aspect-ratio: 1 / 1;
+  }
+
+  &:nth-child(3) .frame {
+    aspect-ratio: 4 / 5;
+  }
+
+  &:nth-child(4) .frame {
+    aspect-ratio: 3 / 4;
+  }
+}
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  background-color: $color-ivory; // фолбэк, пока грузится фото
+}
+
+.img {
+  object-fit: cover;
+  transition: transform 1.2s $ease-lux;
+}
+
+// ============================================================
+// НАПРАВЛЕНИЯ — компактный нумерованный список.
+// Tablet+: две колонки, читаются сверху вниз (01–04 слева, 05–08 справа).
+// ============================================================
+.list {
+  margin-top: 56px;
+
+  @include media(tablet) {
+    display: grid;
+    grid-template-rows: repeat(4, auto);
+    grid-auto-flow: column;
+    column-gap: 64px;
+    margin-top: 72px;
+  }
+
+  @media (min-width: $wide) {
+    column-gap: 96px;
+  }
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  column-gap: 16px;
+  padding: 26px 0;
+  border-top: 1px solid $line;
+
+  @include media(tablet) {
+    grid-template-columns: 52px minmax(0, 1fr);
+    padding: 32px 0;
+  }
+}
+
+// Номер — курсив Cormorant
+.num {
+  font-family: $font-accent;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1.15;
+  color: $ink-accent;
+
+  @include media(tablet) {
+    font-size: 30px;
+  }
+}
+
+.name {
+  font-size: clamp(21px, 1.9vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.text {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: $ink-text;
+
+  @include media(tablet) {
+    font-size: 16px;
+  }
+}
+
+// ============================================================
+// INSTAGRAM — тёмная панель-призыв: главное действие секции
+// ============================================================
+.cta {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  gap: 28px;
+  align-items: center;
+  margin-top: 48px;
+  padding: 36px 24px;
+  overflow: hidden;
+  color: $color-ivory;
+  background-color: $color-charcoal;
+
+  // Тёплое пятно света в углу — как в Hero и Experience
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+      60% 120% at 100% 0%,
+      rgba(180, 154, 122, 0.22),
+      transparent 70%
+    );
+  }
+
+  @include media(tablet) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 48px;
+    margin-top: 64px;
+    padding: 48px;
+  }
+
+  @media (min-width: $wide) {
+    padding: 56px 64px;
+  }
+}
+
+.ctaTitle {
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text-on-dark);
+  text-wrap: balance;
+
+  em {
+    font-size: 1.08em;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: $accent-light;
+  }
+}
+
+.ctaText {
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(245, 240, 232, 0.78);
+}
+
+.handle {
+  font-weight: 600;
+  color: $color-champagne;
+}
+
+// Специфичность 0-2-0 — уверенно перекрывает базовые стили ссылок
+.cta .btn {
+  @include button(
+    $bg: $color-ivory,
+    $text: $color-charcoal,
+    $hover-bg: $btn-hover-bg,
+    $hover-text: $btn-hover-text
+  );
+
+  justify-self: start;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Hover только там, где он есть (не на тач-устройствах)
+@media (hover: hover) {
+  .photo:hover .img {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .head,
+    .photo,
+    .row,
+    .cta {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+    }
+  }
+}
